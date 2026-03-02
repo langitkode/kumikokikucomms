@@ -1,0 +1,332 @@
+import { SiteConfig } from "./types";
+
+export const siteConfig: SiteConfig = {
+  hero: {
+    title: "KUMIKO KIKU",
+    subtitle: "COMMISSION",
+    copyright: "Copyright © KUMIKOKIKUCOMMS. All Rights Reserved.",
+    backgroundImage: "/profile.jpeg",
+  },
+
+  about: {
+    heading: "ABOUT ME",
+    paragraphs: [
+      "Hii! I'm Kiku ♡",
+      "I'm an illustrator who loves bringing online personas to life through cute, expressive art! I specialize in VTuber models, PNGtubers, stream emotes, and custom icons — all made with lots of warmth and tiny magical sparkles ✨",
+      "Whether you're debuting as a VTuber, upgrading your stream vibes, or just want adorable emotes to spam in chat — I'm here to help make your character extra charming and full of personality!",
+      "I focus on soft details, expressive faces, and clean, ready-to-use files so everything looks beautiful and works smoothly for your content.",
+    ],
+    goal: "Let's create something super cute together! 🌸",
+  },
+
+  socialLinks: [
+    { platform: "Email", url: "mailto:example@gmail.com", icon: "email" },
+    { platform: "X", url: "https://x.com/", icon: "x" },
+    { platform: "YouTube", url: "https://youtube.com/", icon: "youtube" },
+    { platform: "Instagram", url: "https://instagram.com/", icon: "instagram" },
+    { platform: "Discord", url: "https://discord.gg/", icon: "discord" },
+    { platform: "Ko-fi", url: "https://ko-fi.com/", icon: "kofi" },
+  ],
+
+  services: [
+    {
+      id: "vtuber",
+      title: "Vtuber",
+      subtitle: "ファランド",
+      description: "Want to become a VTuber but facing these problems?",
+      bulletPoints: [
+        "Not sure about your character concept?",
+        "Don't have a reference sheet yet?",
+        "Want to start small?",
+        "Working with a limited budget?",
+      ],
+      ctaLabel: "Portfolio",
+      ctaLink: "#portfolio",
+      backgroundImage: "/profile.jpeg",
+    },
+    {
+      id: "rigging",
+      title: "VTuber Rigging",
+      subtitle: "ファランド",
+      description: "Already have a model but need it rigged?",
+      bulletPoints: [
+        "Not sure how rigging works",
+        "Want smooth & natural movements",
+        "Need expressive face tracking",
+        "Working with a specific budget",
+      ],
+      ctaLabel: "Portfolio",
+      ctaLink: "#portfolio",
+      backgroundImage: "/profile.jpeg",
+      important: [
+        "Please send me all the reference needed for the Live2d Vtuber Model",
+        "Designing model from scratch without reference sheet may get additional charged",
+      ],
+    },
+    {
+      id: "pngtuber",
+      title: "PNGTuber",
+      subtitle: "ファランド",
+      description:
+        "A perfect solution for you who wants to start the VTubing journey already — but VTuber is a liiiiiiitle bit pricey!",
+      bulletPoints: [
+        "Simple talking animation (open/close mouth)",
+        "Blinking expression",
+        "Easy to use",
+        "Budget-friendly option",
+      ],
+      ctaLabel: "Portfolio",
+      ctaLink: "#portfolio",
+      backgroundImage: "/profile.jpeg",
+    },
+    {
+      id: "emotes",
+      title: "Emotes",
+      subtitle: "ファランド",
+      description:
+        "Want custom emotes that match your personality? Perfect for Twitch, YouTube, Discord, and VTubers!",
+      bulletPoints: [
+        "Custom expressions (happy, angry, crying, hype, etc.)",
+        "Clean & readable at small sizes",
+        "High-resolution files included",
+        "Platform-ready (Twitch / YouTube / Discord)",
+      ],
+      ctaLabel: "Portfolio",
+      ctaLink: "#portfolio",
+      backgroundImage: "/profile.jpeg",
+    },
+    {
+      id: "ych",
+      title: "YCH Special",
+      subtitle: "ファランド",
+      description:
+        "Looking for something cute, fun, and more affordable? YCH (Your Character Here) is perfect!",
+      bulletPoints: [
+        "Pre-made pose & concept",
+        "Your character in my special template",
+        "Custom details (hair, outfit, colors)",
+        "Budget-friendly & faster delivery",
+      ],
+      ctaLabel: "Portfolio",
+      ctaLink: "#portfolio",
+      backgroundImage: "/profile.jpeg",
+    },
+    {
+      id: "refsheet",
+      title: "Reference Sheet",
+      subtitle: "ファランド",
+      description:
+        "Need a clear and detailed reference for your character? Perfect for VTubers, OCs, game characters, and commercial use.",
+      bulletPoints: [
+        "Front & back view",
+        "Color palette",
+        "Close-up details (eyes, accessories, outfit)",
+        "Expression samples (optional)",
+      ],
+      ctaLabel: "Portfolio",
+      ctaLink: "#portfolio",
+      backgroundImage: "/profile.jpeg",
+    },
+  ],
+
+  pricing: [
+    {
+      id: "vtuber-pricing",
+      title: "VTuber Commission",
+      priceItems: [
+        { label: "Bust-up Art", price: "from $100" },
+        { label: "Half Body (hips-up)", price: "from $230" },
+        { label: "Full Body", price: "from $300" },
+      ],
+      revisionPolicy: "UNLIMITED REVISION",
+      includes: [
+        "Vtuber Model",
+        "3 Expressions (happy, sad, angry)",
+        "2 Twitch Emotes",
+        "File PNG and PSD Ready to rig",
+      ],
+      addOns: [
+        { label: "Expression (art)", price: "$20" },
+        { label: "Expression (rig)", price: "$30" },
+        { label: "Extra 1 pair Outfit (Art)", price: "$100" },
+        { label: "Extra 1 pair Outfit (Rig)", price: "$100" },
+        { label: "Extra Pet (Art)", price: "from $45" },
+        { label: "Extra Pet (Rig)", price: "from $45" },
+        { label: "Toggle", price: "from $20" },
+        { label: "Toggle (Rig)", price: "from $20" },
+        { label: "Base body (Art)", price: "$75" },
+        { label: "Base body (Rig)", price: "$75" },
+      ],
+      ctaLabel: "Request Commission",
+      ctaLink: "#request",
+    },
+    {
+      id: "rigging-pricing",
+      title: "VTuber Rigging",
+      priceItems: [
+        { label: "Rigging Bust-up", price: "from $150" },
+        { label: "Rigging Half Body", price: "$230" },
+        { label: "Rigging Full Body", price: "$300" },
+        { label: "Additional VBridger", price: "$300" },
+        { label: "Walking Animation", price: "$50" },
+        { label: "Leaning Forward", price: "$30" },
+      ],
+      revisionPolicy: "UNLIMITED REVISION",
+      includes: [
+        "Rigging service",
+        "3 expression rigging",
+        "Natural head & body movement",
+        "Detailed facial expressions",
+        "Physics for hair & accessories",
+        "Optimized for streaming",
+      ],
+      ctaLabel: "Request Commission",
+      ctaLink: "#request",
+    },
+    {
+      id: "pngtuber-pricing",
+      title: "PNGTuber Commission",
+      priceItems: [
+        { label: "Bust Up PNG", price: "$60" },
+        { label: "Half Body PNG", price: "$85" },
+        { label: "Full Body PNG", price: "$100" },
+      ],
+      revisionPolicy: "UNLIMITED REVISION",
+      includes: [
+        "1 character",
+        "BUST UP character",
+        "Talk, No Talk, Open Eyes, Close Eyes",
+        "4 PNG files (talk+close eyes, no talk+close eyes, talk+open eyes, no talk+open eyes)",
+        "JPG and PNG files",
+        "2048 x 2048px with 350dpi",
+      ],
+      addOns: [
+        { label: "Extra Expressions", price: "+$15" },
+        { label: "Extra Hand Pose", price: "+$20" },
+        { label: "PSD file", price: "+$100" },
+      ],
+      ctaLabel: "Request Commission",
+      ctaLink: "#request",
+    },
+    {
+      id: "pngtuber-plus-pricing",
+      title: "PNGTuber+ Commission",
+      priceItems: [
+        { label: "Bust Up", price: "from $100" },
+        { label: "Half Body", price: "from $120" },
+        { label: "Full Body", price: "from $140" },
+      ],
+      revisionPolicy: "UNLIMITED REVISION",
+      includes: [
+        "1 character",
+        "BUST UP character",
+        "Talk, No Talk, Open Eyes, Close Eyes",
+        "4 PNG files (talk+close eyes, no talk+close eyes, talk+open eyes, no talk+open eyes)",
+        "JPG and PNG files",
+        "2048 x 2048px with 350dpi",
+      ],
+      addOns: [
+        { label: "Extra Expressions", price: "+$20" },
+        { label: "Extra Hand Pose", price: "+$30" },
+        { label: "Extra pose", price: "+$50" },
+        { label: "PSD file", price: "+$100" },
+      ],
+      ctaLabel: "Request Commission",
+      ctaLink: "#request",
+    },
+    {
+      id: "emotes-pricing",
+      title: "Emotes Commission",
+      priceItems: [
+        { label: "1 Static Emote", price: "$15" },
+      ],
+      revisionPolicy: "UNLIMITED REVISION",
+      includes: [
+        "1 Static Emote full of expression!",
+        "PNG sizes: 1000px, 112px, 56px, and 28px",
+      ],
+      addOns: [
+        { label: "Animated Emote", price: "+$20" },
+        { label: "Custom Pose (not on list)", price: "+$5" },
+      ],
+      ctaLabel: "Request Commission",
+      ctaLink: "#request",
+    },
+    {
+      id: "refsheet-pricing",
+      title: "Reference Sheet",
+      priceItems: [
+        { label: "Full reference (front view)", price: "$120" },
+        { label: "Front and back views", price: "$180" },
+        { label: "Front, back, and side views", price: "$250" },
+      ],
+      revisionPolicy: "UNLIMITED REVISION",
+      includes: [
+        "Artboard Resolution 3000-4000px",
+        "Commercial Use",
+        "PNG Files",
+      ],
+      addOns: [
+        { label: "Extra expressions", price: "$15 each" },
+        { label: "New outfit", price: "$50/view" },
+        { label: "Different pose", price: "$50/view" },
+        { label: "Extra assets", price: "$25 each" },
+      ],
+      ctaLabel: "Request Commission",
+      ctaLink: "#request",
+    },
+    {
+      id: "ych-pricing",
+      title: "YCH Spring Couple (Presale)",
+      priceItems: [{ label: "YCH Spring Couple (Presale)", price: "TBA" }],
+      revisionPolicy: "UNLIMITED REVISION",
+      includes: [
+        "PNG file",
+        "JPG file",
+        "Background and full rendered character",
+        "Commercial Use for content and streaming",
+      ],
+      addOns: [
+        { label: "Custom Outfit (M/F)", price: "+$30 each" },
+        { label: "Custom Expression (M/F)", price: "+$10 each" },
+        { label: "Pet", price: "+$20" },
+        { label: "Custom Body type (M/F)", price: "+$30 each" },
+      ],
+      ctaLabel: "Request Commission",
+      ctaLink: "#request",
+    },
+  ],
+
+  portfolio: [
+    {
+      src: "/placeholder-1.svg",
+      alt: "VTuber Character Sheet 1",
+      label: "Character 1",
+    },
+    {
+      src: "/placeholder-2.svg",
+      alt: "VTuber Character Sheet 2",
+      label: "Character 2",
+    },
+    {
+      src: "/placeholder-3.svg",
+      alt: "VTuber Character Sheet 3",
+      label: "Character 3",
+    },
+    {
+      src: "/placeholder-4.svg",
+      alt: "VTuber Character Sheet 4",
+      label: "Character 4",
+    },
+    {
+      src: "/placeholder-5.svg",
+      alt: "VTuber Character Sheet 5",
+      label: "Character 5",
+    },
+    {
+      src: "/placeholder-6.svg",
+      alt: "VTuber Character Sheet 6",
+      label: "Character 6",
+    },
+  ],
+};
