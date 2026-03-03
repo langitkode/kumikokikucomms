@@ -257,10 +257,10 @@ export default function Gallery() {
               </svg>
             </button>
 
-            {/* Image Container */}
-            <div className="relative aspect-video bg-[var(--color-nightdark)] border border-hairline border-[var(--color-textdim)]/10 rounded-studio overflow-hidden group">
+            {/* Image Container - Original aspect ratio */}
+            <div className="relative bg-[var(--color-nightdark)] border border-hairline border-[var(--color-textdim)]/10 rounded-studio overflow-hidden group flex items-center justify-center" style={{ minHeight: '300px', maxHeight: '70vh' }}>
               <Image
-                src={items[selectedImage].src}
+                src={items[selectedImage].lightboxSrc}
                 alt={items[selectedImage].alt}
                 fill
                 className="object-contain"

@@ -19,8 +19,8 @@ export async function getCroppedImg(
     return "";
   }
 
-  // Max dimension for the output image (e.g., 1600px width or height)
-  const MAX_DIMENSION = 1600;
+  // Max dimension for the output image (1000px max for optimal file size)
+  const MAX_DIMENSION = 1000;
   let targetWidth = pixelCrop.width;
   let targetHeight = pixelCrop.height;
 
@@ -75,7 +75,8 @@ export async function processFullImage(imageSrc: string): Promise<string> {
 
   if (!ctx) return "";
 
-  const MAX_DIMENSION = 1600;
+  // Max dimension for the output image (1000px max for optimal file size)
+  const MAX_DIMENSION = 1000;
   let targetWidth = image.naturalWidth;
   let targetHeight = image.naturalHeight;
 

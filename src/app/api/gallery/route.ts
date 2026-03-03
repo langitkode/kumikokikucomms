@@ -58,15 +58,21 @@ export async function GET(request: Request) {
     const galleryItems = resources.map((resource: any) => {
       const ctx = resource.context?.custom || resource.context || {};
 
-      // Transform the secure_url to add thumbnail parameters
-      // Insert transformation params after /upload/ but before version (v123456/)
-      const transformUrl = resource.secure_url.replace(
+      // Grid thumbnail: 16:9 crop for consistent layout
+      const gridUrl = resource.secure_url.replace(
         /\/upload\/(v\d+\/)?/,
         '/upload/w_640,h_360,c_fill,q_auto:good,f_auto/$1'
       );
 
+      // Lightbox: Original aspect ratio, max 800px bounds
+      const lightboxUrl = resource.secure_url.replace(
+        /\/upload\/(v\d+\/)?/,
+        '/upload/w_800,h_800,q_auto:good,f_auto/$1'
+      );
+
       return {
-        src: transformUrl,
+        src: gridUrl,
+        lightboxSrc: lightboxUrl,
         alt: ctx.alt || resource.alt || resource.public_id,
         label: ctx.caption || "Portfolio Piece",
         category: ctx.category || "all",

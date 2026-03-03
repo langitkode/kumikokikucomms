@@ -18,6 +18,7 @@ export const dynamic = 'force-dynamic';
 
 interface GalleryImage {
   src: string;
+  lightboxSrc: string;
   alt: string;
   label: string;
   category: string;
@@ -314,10 +315,10 @@ function GalleryContent() {
               </svg>
             </button>
 
-            {/* Image Container */}
-            <div className="relative aspect-video bg-[var(--color-nightdark)] border border-[var(--color-nightlight)] rounded-sm overflow-hidden group">
+            {/* Image Container - Original aspect ratio */}
+            <div className="relative bg-[var(--color-nightdark)] border border-[var(--color-nightlight)] rounded-sm overflow-hidden group flex items-center justify-center" style={{ minHeight: '300px', maxHeight: '70vh' }}>
               <Image
-                src={portfolioItems[selectedImage].src}
+                src={portfolioItems[selectedImage].lightboxSrc}
                 alt={portfolioItems[selectedImage].alt}
                 fill
                 className="object-contain"
