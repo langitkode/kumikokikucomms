@@ -98,7 +98,6 @@ export default function SocialIcons({
   size = "md",
   color,
 }: SocialIconsProps) {
-  const iconSize = sizeMap[size];
   const iconColor = color || "currentColor";
 
   return (
@@ -109,13 +108,13 @@ export default function SocialIcons({
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative p-2 border border-ash hover:border-aka transition-all duration-200"
+          className="group relative p-3 border border-night-light hover:border-neon-pink transition-all duration-200"
           style={{ color: iconColor }}
           aria-label={link.platform}
         >
-          <SocialIcon icon={link.icon} size={iconSize} />
-          {/* Hover accent */}
-          <div className="absolute inset-0 border border-aka opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+          <SocialIcon icon={link.icon} size={sizeMap[size]} />
+          {/* Neon glow on hover */}
+          <div className="absolute inset-0 border border-neon-pink opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
         </a>
       ))}
     </div>

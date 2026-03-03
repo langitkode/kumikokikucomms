@@ -53,29 +53,55 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-24 px-6 bg-sumi">
+    <section id="about" ref={sectionRef} className="relative min-h-screen px-6 py-20 bg-night-base flex items-center">
       {/* Background */}
-      <div className="absolute inset-0 bg-grid-urban opacity-10" />
+      <div className="absolute inset-0 bg-grid-fine opacity-10" />
+      <div className="absolute inset-0 bg-lantern-glow opacity-30" />
       
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <p ref={subheadingRef} className="text-aka text-xs uppercase tracking-widest mb-3">
+        <div className="text-center mb-12">
+          <p ref={subheadingRef} className="text-neon-pink text-xs uppercase tracking-widest mb-3">
             {about.headingJP}
           </p>
-          <h2 ref={headingRef} className="text-4xl md:text-6xl font-bold text-shiro tracking-tight">
+          <h2 ref={headingRef} className="text-4xl md:text-5xl font-bold text-text-primary tracking-tight">
             {about.heading}
           </h2>
-          <div className="w-16 h-px bg-aka mx-auto mt-6" />
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-neon-pink to-transparent mx-auto mt-6" />
         </div>
 
         {/* Content Grid */}
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Image/Profile */}
+          <div ref={imageRef} className="relative order-first lg:order-last">
+            <div className="relative aspect-[3/4] max-w-md mx-auto">
+              {/* Profile Image */}
+              <div className="relative w-full h-full overflow-hidden">
+                <Image
+                  src="/profile.jpeg"
+                  alt="Kumiko Kiku"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-night-base/80 via-transparent to-transparent" />
+              </div>
+              
+              {/* Neon Corner Accents */}
+              <div className="absolute -top-3 -left-3 w-24 h-24 border-l-2 border-t-2 border-neon-orange" />
+              <div className="absolute -bottom-3 -right-3 w-24 h-24 border-r-2 border-b-2 border-neon-pink" />
+              
+              {/* Glow effect behind image */}
+              <div className="absolute -inset-4 bg-gradient-to-tr from-neon-orange/20 to-neon-pink/20 blur-xl -z-10" />
+            </div>
+          </div>
+
           {/* Text Content */}
           <div ref={contentRef} className="space-y-6">
             {/* Intro */}
-            <div className="border-l-2 border-aka pl-6">
-              <p className="text-xl md:text-2xl text-shiro font-light leading-relaxed">
+            <div className="border-l-2 border-neon-orange pl-6">
+              <p className="text-xl md:text-2xl text-text-primary font-light leading-relaxed">
                 {about.paragraphs[0]}
               </p>
             </div>
@@ -83,7 +109,7 @@ export default function About() {
             {/* Main Content */}
             <div className="space-y-4">
               {about.paragraphs.slice(1).map((paragraph, i) => (
-                <p key={i} className="text-ash-light text-sm md:text-base leading-relaxed">
+                <p key={i} className="text-text-secondary text-sm md:text-base leading-relaxed">
                   {paragraph}
                 </p>
               ))}
@@ -91,7 +117,7 @@ export default function About() {
 
             {/* Goal Statement */}
             <div className="pt-6">
-              <p className="text-aka text-sm uppercase tracking-wider font-medium italic">
+              <p className="text-neon-pink text-sm uppercase tracking-wider font-medium italic">
                 {about.goal}
               </p>
             </div>
@@ -102,50 +128,6 @@ export default function About() {
                 Explore Services
               </Button>
             </div>
-          </div>
-
-          {/* Image/Visual */}
-          <div ref={imageRef} className="relative">
-            <div className="aspect-[3/4] bg-charcoal border border-ash relative overflow-hidden">
-              {/* Placeholder for profile image */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-aka text-6xl font-bold mb-2">K</p>
-                  <p className="text-ash text-xs uppercase tracking-widest">Kumiko Kiku</p>
-                </div>
-              </div>
-              
-              {/* Decorative Elements */}
-              <div className="absolute top-4 left-4 w-16 h-16 border-l border-t border-aka/50" />
-              <div className="absolute bottom-4 right-4 w-16 h-16 border-r border-b border-aka/50" />
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-6">
-              <div className="text-center p-4 bg-charcoal border border-ash">
-                <p className="text-2xl font-bold text-shiro">100+</p>
-                <p className="text-ash text-xs uppercase tracking-wider mt-1">Projects</p>
-              </div>
-              <div className="text-center p-4 bg-charcoal border border-ash">
-                <p className="text-2xl font-bold text-shiro">50+</p>
-                <p className="text-ash text-xs uppercase tracking-wider mt-1">Clients</p>
-              </div>
-              <div className="text-center p-4 bg-charcoal border border-ash">
-                <p className="text-2xl font-bold text-shiro">5+</p>
-                <p className="text-ash text-xs uppercase tracking-wider mt-1">Years</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Signature Strip */}
-        <div className="mt-20 pt-8 border-t border-ash-light">
-          <div className="flex items-center justify-between text-ash text-xs uppercase tracking-wider">
-            <span>Based in Japan</span>
-            <span>•</span>
-            <span>Available Worldwide</span>
-            <span>•</span>
-            <span>Commissions Open</span>
           </div>
         </div>
       </div>

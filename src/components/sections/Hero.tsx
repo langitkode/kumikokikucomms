@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { siteConfig } from "@/lib/config";
-import SocialIcons from "@/components/ui/SocialIcons";
 
 export default function Hero() {
-  const { hero, about } = siteConfig;
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const { hero } = siteConfig;
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
@@ -53,69 +50,46 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden bg-sumi">
-      {/* Background Image/Video */}
-      <div className="absolute inset-0">
-        {hero.backgroundVideo && (
-          <video
-            src={hero.backgroundVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-              isVideoLoaded ? "opacity-100" : "opacity-0"
-            }`}
-            onLoadedData={() => setIsVideoLoaded(true)}
-          />
-        )}
-        <div
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            isVideoLoaded ? "opacity-40" : "opacity-70"
-          }`}
-        >
-          <Image
-            src={hero.backgroundImage}
-            alt="Hero background"
-            fill
-            className="object-cover"
-            priority
-            quality={90}
-            sizes="100vw"
-          />
-        </div>
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-sumi/90 via-sumi/60 to-sumi" />
-      </div>
+    <section id="home" className="relative h-screen w-full overflow-hidden bg-night-base">
+      {/* Night Gradient Background */}
+      <div className="absolute inset-0 bg-night-gradient" />
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-grid-urban opacity-10" />
+      {/* Japanese Aesthetic Grid Overlay */}
+      <div className="absolute inset-0 bg-grid-japanese opacity-20" />
+
+      {/* Lantern Glow Effects (corner ambient lighting) */}
+      <div className="absolute inset-0 bg-lantern-glow opacity-50" />
+
+      {/* Vertical Light Beams (like street light rays) */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-neon-orange/10 to-transparent" />
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-neon-pink/10 to-transparent" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
-        {/* Main Content Container */}
         <div className="max-w-5xl mx-auto text-center">
           {/* Japanese Decorative Element */}
-          <div className="mb-6">
-            <div className="inline-flex items-center gap-3">
-              <div className="w-8 h-px bg-aka" />
-              <p className="text-aka text-xs uppercase tracking-[0.3em]">
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-4">
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-neon-orange to-transparent" />
+              <p className="text-neon-orange text-xs uppercase tracking-[0.5em]">
                 クミコキク
               </p>
-              <div className="w-8 h-px bg-aka" />
+              <div className="w-16 h-px bg-gradient-to-l from-transparent via-neon-orange to-transparent" />
             </div>
           </div>
 
           {/* Main Title */}
           <h1
             ref={titleRef}
-            className="text-6xl md:text-8xl lg:text-9xl font-bold text-shiro mb-6 tracking-tighter"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-text-primary mb-6 tracking-tighter"
           >
             {hero.title.split(" ").map((word, i) => (
-              <span key={i}>
+              <span key={i} className="relative inline-block">
                 {word}
                 {i < hero.title.split(" ").length - 1 && (
-                  <span className="text-aka">.</span>
+                  <span className="text-neon-orange text-glow-orange">.</span>
                 )}
               </span>
             ))}
@@ -124,7 +98,7 @@ export default function Hero() {
           {/* Subtitle */}
           <p
             ref={subtitleRef}
-            className="text-2xl md:text-4xl text-aka font-medium uppercase tracking-widest mb-4"
+            className="text-xl md:text-3xl text-neon-orange font-medium uppercase tracking-widest mb-4 text-glow-orange"
           >
             {hero.subtitle}
           </p>
@@ -132,59 +106,46 @@ export default function Hero() {
           {/* Tagline */}
           <p
             ref={taglineRef}
-            className="text-sm md:text-base text-ash-light uppercase tracking-wider max-w-xl mx-auto"
+            className="text-sm md:text-base text-text-secondary uppercase tracking-wider max-w-xl mx-auto"
           >
             {hero.tagline}
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex items-center justify-center gap-4 mt-10">
+          <div className="flex items-center justify-center gap-4 mt-12">
             <a
               href="#services"
-              className="group relative px-8 py-3.5 bg-aka text-shiro text-sm uppercase tracking-wider font-medium overflow-hidden"
+              className="group relative px-10 py-4 bg-gradient-to-r from-neon-orange to-neon-pink text-night-dark text-sm uppercase tracking-wider font-medium overflow-hidden shadow-lg"
             >
               <span className="relative z-10">View Services</span>
-              <div className="absolute inset-0 bg-shiro transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <span className="absolute inset-0 z-10 flex items-center justify-center text-sumi opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute inset-0 bg-text-primary transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <span className="absolute inset-0 z-10 flex items-center justify-center text-night-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 View Services
               </span>
             </a>
             <a
               href="/gallery"
-              className="px-8 py-3.5 border border-ash text-shiro text-sm uppercase tracking-wider font-medium hover:border-aka hover:text-aka transition-colors duration-200"
+              className="px-10 py-4 border border-neon-orange/50 text-text-primary text-sm uppercase tracking-wider font-medium hover:bg-neon-orange/10 hover:border-neon-orange hover:text-glow-orange transition-all duration-200"
             >
               Portfolio
             </a>
           </div>
         </div>
 
-        {/* Bottom Info Bar */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 py-8">
-          <div className="max-w-5xl mx-auto flex items-end justify-between">
-            {/* Social Links */}
-            <div>
-              <p className="text-ash text-xs uppercase tracking-wider mb-3">
-                Connect
-              </p>
-              <SocialIcons links={siteConfig.socialLinks} size="sm" />
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-ash text-[10px] uppercase tracking-widest writing-vertical">
-                Scroll
-              </p>
-              <div className="w-px h-16 bg-gradient-to-b from-aka via-aka to-transparent" />
-            </div>
-          </div>
+        {/* Minimal Scroll Indicator */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+          <p className="text-text-muted text-[10px] uppercase tracking-widest">
+            Scroll
+          </p>
+          <div className="w-px h-16 bg-gradient-to-b from-neon-orange via-neon-orange/50 to-transparent animate-pulse" />
         </div>
       </div>
 
-      {/* Corner Accents */}
-      <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-aka/30" />
-      <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-aka/30" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-aka/30" />
-      <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-aka/30" />
+      {/* Minimal Corner Accents (neon lines) */}
+      <div className="absolute top-8 left-8 w-20 h-20 border-l border-t border-neon-orange/40" />
+      <div className="absolute top-8 right-8 w-20 h-20 border-r border-t border-neon-pink/40" />
+      <div className="absolute bottom-32 left-8 w-20 h-20 border-l border-b border-neon-pink/40" />
+      <div className="absolute bottom-32 right-8 w-20 h-20 border-r border-b border-neon-orange/40" />
     </section>
   );
 }

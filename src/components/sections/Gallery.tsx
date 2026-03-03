@@ -29,20 +29,21 @@ export default function Gallery() {
   };
 
   return (
-    <section id="portfolio" className="relative py-24 px-6 bg-sumi">
+    <section id="portfolio" className="relative py-24 px-6 bg-night-base">
       {/* Background */}
-      <div className="absolute inset-0 bg-grid-urban opacity-20" />
+      <div className="absolute inset-0 bg-grid-fine opacity-10" />
+      <div className="absolute inset-0 bg-lantern-glow opacity-20" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <p className="text-aka text-xs uppercase tracking-widest mb-2">
+          <p className="text-neon-blue text-xs uppercase tracking-widest mb-2">
             ギャラリー
           </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-shiro tracking-tight mb-4">
+          <h2 className="text-4xl md:text-6xl font-bold text-text-primary tracking-tight mb-4">
             GALLERY
           </h2>
-          <div className="w-16 h-px bg-aka mx-auto" />
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-neon-blue to-transparent mx-auto" />
         </div>
 
         {/* Preview Grid */}
@@ -53,7 +54,7 @@ export default function Gallery() {
               ref={(el) => {
                 itemRefs.current[index] = el;
               }}
-              className="group relative aspect-square bg-charcoal border border-ash overflow-hidden"
+              className="group relative aspect-square bg-night-mid border border-night-light overflow-hidden"
             >
               {/* Image */}
               <Image
@@ -70,19 +71,19 @@ export default function Gallery() {
 
               {/* Loading Placeholder */}
               {!loadedImages.has(index) && (
-                <div className="absolute inset-0 bg-charcoal animate-pulse" />
+                <div className="absolute inset-0 bg-night-mid animate-pulse" />
               )}
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-sumi/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
-                <p className="text-shiro font-medium text-sm">{item.label}</p>
-                <p className="text-aka text-xs uppercase tracking-wider">
+              <div className="absolute inset-0 bg-night-base/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
+                <p className="text-text-primary font-medium text-sm">{item.label}</p>
+                <p className="text-neon-blue text-xs uppercase tracking-wider">
                   {item.category}
                 </p>
               </div>
 
               {/* Corner Accent */}
-              <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-aka opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-neon-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           ))}
         </div>
@@ -91,7 +92,7 @@ export default function Gallery() {
         <div className="text-center">
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-3 px-8 py-4 border border-aka text-aka hover:bg-aka hover:text-shiro transition-all duration-200 uppercase tracking-wider text-sm"
+            className="inline-flex items-center gap-3 px-8 py-4 border border-neon-blue text-neon-blue hover:bg-neon-blue/10 hover:text-text-primary transition-all duration-200 uppercase tracking-wider text-sm"
           >
             <span>View Full Gallery</span>
             <svg
