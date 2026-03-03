@@ -53,14 +53,18 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="relative min-h-screen px-6 py-20 bg-[var(--color-night)] flex items-center">
+    <section 
+      id="about" 
+      ref={sectionRef} 
+      className="relative min-h-screen px-6 py-20 bg-[var(--color-night)] flex items-center"
+    >
       {/* Background */}
       <div className="absolute inset-0 bg-grid-fine opacity-10" />
       <div className="absolute inset-0 bg-lantern-glow opacity-30" />
       
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <p ref={subheadingRef} className="text-[var(--color-neonpink)] text-xs uppercase tracking-widest mb-3">
             {about.headingJP}
           </p>
@@ -70,29 +74,31 @@ export default function About() {
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-[var(--color-neonpink)] to-transparent mx-auto mt-6" />
         </div>
 
-        {/* Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Image/Profile */}
-          <div ref={imageRef} className="relative order-first lg:order-last">
-            <div className="relative aspect-[3/4] max-w-md mx-auto">
-              {/* Profile Image */}
-              <div className="relative w-full h-full overflow-hidden">
+        {/* Content Grid - Fixed Layout */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Image/Profile - Order first on mobile, last on desktop */}
+          <div ref={imageRef} className="relative lg:order-last">
+            <div className="relative w-full max-w-md mx-auto aspect-[3/4]">
+              {/* Profile Image Container */}
+              <div className="relative w-full h-full overflow-hidden bg-[var(--color-nightmid)]">
                 <Image
                   src="/profile.jpeg"
                   alt="Kumiko Kiku"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 1024px) 100vw, 400px"
+                  priority
                 />
+                {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-night)]/80 via-transparent to-transparent" />
               </div>
               
-              {/* Neon Corner Accents */}
-              <div className="absolute -top-3 -left-3 w-24 h-24 border-l-2 border-t-2 border-[var(--color-neon)]" />
-              <div className="absolute -bottom-3 -right-3 w-24 h-24 border-r-2 border-b-2 border-[var(--color-neonpink)]" />
+              {/* Neon Corner Accents - Positioned absolutely relative to container */}
+              <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-[var(--color-neon)] -translate-x-1 -translate-y-1" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-[var(--color-neonpink)] translate-x-1 translate-y-1" />
               
               {/* Glow effect behind image */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-[var(--color-neon)]/20 to-[var(--color-neonpink)]/20 blur-xl -z-10" />
+              <div className="absolute -inset-4 bg-gradient-to-tr from-[var(--color-neon)]/10 to-[var(--color-neonpink)]/10 blur-2xl -z-10" />
             </div>
           </div>
 
