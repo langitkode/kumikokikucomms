@@ -50,6 +50,7 @@ export interface PricingSection {
   includes: string[];
   addOns?: PriceItem[];
   ctaLabel: string;
+  ctaLink: string;
 }
 
 export interface PortfolioItem {

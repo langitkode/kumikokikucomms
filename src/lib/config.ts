@@ -210,6 +210,7 @@ export const siteConfig: SiteConfig = {
         { label: "Base Body Only", price: "$75" },
       ],
       ctaLabel: "Request Commission",
+      ctaLink: "#request",
     },
     {
       id: "pngtuber-package",
@@ -233,6 +234,7 @@ export const siteConfig: SiteConfig = {
         { label: "PSD Source File", price: "+$100" },
       ],
       ctaLabel: "Request Commission",
+      ctaLink: "#request",
     },
     {
       id: "pngtuber-plus-package",
@@ -258,6 +260,7 @@ export const siteConfig: SiteConfig = {
         { label: "PSD Source File", price: "+$100" },
       ],
       ctaLabel: "Request Commission",
+      ctaLink: "#request",
     },
     {
       id: "reference-package",
@@ -282,6 +285,7 @@ export const siteConfig: SiteConfig = {
         { label: "Extra Assets", price: "$25 each" },
       ],
       ctaLabel: "Request Commission",
+      ctaLink: "#request",
     },
     {
       id: "emotes-package",
@@ -301,6 +305,7 @@ export const siteConfig: SiteConfig = {
         { label: "Custom Pose", price: "+$5" },
       ],
       ctaLabel: "Request Commission",
+      ctaLink: "#request",
     },
     {
       id: "ych-package",
@@ -323,6 +328,7 @@ export const siteConfig: SiteConfig = {
         { label: "Custom Body Type (M/F)", price: "+$30 each" },
       ],
       ctaLabel: "Request Commission",
+      ctaLink: "#request",
     },
   ],
 

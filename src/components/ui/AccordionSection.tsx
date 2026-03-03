@@ -3,13 +3,15 @@
 import { useState, useRef, useEffect } from "react";
 import { animateAccordion } from "@/lib/animations";
 
+import { ServicePricing } from "@/lib/types";
+
 interface AccordionSectionProps {
   title: string;
   titleJP?: string;
   description: string;
   features?: string[];
   important?: string[];
-  pricing?: Record<string, string>;
+  pricing?: ServicePricing;
   isOpen?: boolean;
   onToggle?: () => void;
 }
@@ -107,25 +109,27 @@ export default function AccordionSection({
           )}
 
           {/* Pricing */}
-          {pricing && Object.keys(pricing).length > 0 && (
+          {pricing && (
             <div className="mb-6">
               <p className="text-shiro text-xs font-bold uppercase tracking-wider mb-3">
                 ✧ Pricing
               </p>
               <div className="space-y-2">
-                {Object.entries(pricing).map(([key, value], i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between text-sm border-b border-ash-light pb-2"
-                  >
-                    <span className="text-ash-light capitalize">
-                      {key.replace(/([A-Z])/g, " $1").trim()}
-                    </span>
-                    <span className="text-shiro font-mono font-medium">
-                      {value}
-                    </span>
-                  </div>
-                ))}
+                {(Object.entries(pricing) as [string, string][])
+                  .filter(([_, value]) => value !== undefined)
+                  .map(([key, value], i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between text-sm border-b border-ash-light pb-2"
+                    >
+                      <span className="text-ash-light capitalize">
+                        {key.replace(/([A-Z])/g, " $1").trim()}
+                      </span>
+                      <span className="text-shiro font-mono font-medium">
+                        {value}
+                      </span>
+                    </div>
+                  ))}
               </div>
             </div>
           )}

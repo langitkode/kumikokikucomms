@@ -61,7 +61,7 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={baseClasses} {...props}>
+      <Link href={href} className={baseClasses}>
         {content}
       </Link>
     );

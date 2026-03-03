@@ -428,7 +428,7 @@ export function animateCounter(
       toggleActions: "play none none reverse",
     },
     onUpdate: function () {
-      element.innerText = Math.ceil(this.targets()[0].innerText);
+      element.innerText = String(Math.ceil(this.targets()[0].innerText));
     },
   });
 }

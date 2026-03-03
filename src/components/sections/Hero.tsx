@@ -50,7 +50,9 @@ export default function Hero() {
       "-=0.3"
     );
 
-    return () => tl.kill();
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   return (
