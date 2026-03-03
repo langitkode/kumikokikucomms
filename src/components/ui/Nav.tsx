@@ -42,25 +42,29 @@ export default function Nav() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-[var(--color-night)]/95 backdrop-blur-sm border-b border-[var(--color-neon)]/20 py-3"
+            ? "bg-[var(--color-studio-dark)]/90 backdrop-blur-md py-3 border-b border-hairline border-[var(--color-textdim)]/10"
             : "bg-transparent py-5"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a
-              href="/"
-              className="text-lg font-bold text-[var(--color-text)] tracking-tighter group"
-            >
-              KK
-              <span className="text-[var(--color-neon)]">.</span>
+            <a href="/" className="flex items-center gap-2 group">
+              <span className="text-lg font-black text-[var(--color-text)] tracking-tighter">
+                KK
+                <span className="text-[var(--color-neon)] animate-neon-pulse">
+                  .
+                </span>
+              </span>
+              <span className="text-[var(--color-neon)] text-[10px] opacity-40 font-mono hidden lg:inline">
+                菊
+              </span>
             </a>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-0.5">
               {navItems.map((item) => (
                 <a
                   key={item.label}
@@ -71,10 +75,10 @@ export default function Nav() {
                       handleNavClick(item.href);
                     }
                   }}
-                  className="relative px-4 py-2 text-xs text-[var(--color-textmuted)] uppercase tracking-wider hover:text-[var(--color-text)] transition-colors group"
+                  className="relative px-4 py-2 text-[11px] text-[var(--color-textmuted)] uppercase tracking-[0.2em] hover:text-[var(--color-text)] transition-colors duration-200 group font-mono font-medium"
                 >
                   {item.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-px bg-[var(--color-neon)] group-hover:w-full transition-all duration-300" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-[var(--color-neon)] group-hover:w-3/4 transition-all duration-300" />
                 </a>
               ))}
             </div>
@@ -83,7 +87,11 @@ export default function Nav() {
             <div className="hidden md:block">
               <a
                 href="#request"
-                className="px-5 py-2.5 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-nightdark)] text-xs uppercase tracking-wider font-medium hover:shadow-lg transition-all duration-200"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick("#request");
+                }}
+                className="px-5 py-2.5 bg-[var(--color-neon)] text-[var(--color-studio-dark)] text-[10px] uppercase tracking-[0.15em] font-black font-mono hover:brightness-110 transition-all duration-300 rounded-sm"
               >
                 Commission
               </a>
@@ -96,13 +104,12 @@ export default function Nav() {
               aria-label="Toggle menu"
             >
               <svg
-                width="24"
-                height="24"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="transition-transform duration-300"
               >
                 {isMobileOpen ? (
                   <>
@@ -111,9 +118,9 @@ export default function Nav() {
                   </>
                 ) : (
                   <>
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="4" y1="12" x2="16" y2="12" />
+                    <line x1="4" y1="17" x2="20" y2="17" />
                   </>
                 )}
               </svg>
@@ -124,9 +131,16 @@ export default function Nav() {
 
       {/* Mobile Menu Overlay */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-40 bg-[var(--color-night)]/95 backdrop-blur-sm md:hidden">
+        <div className="fixed inset-0 z-40 bg-[var(--color-nightdark)]/95 backdrop-blur-lg md:hidden">
           <div className="flex flex-col items-center justify-center h-full px-6">
-            <div className="space-y-6 text-center">
+            {/* Decorative kanji */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
+              <p className="text-[30vw] font-black text-[var(--color-neon)] opacity-[0.03]">
+                菊
+              </p>
+            </div>
+
+            <div className="space-y-8 text-center relative z-10">
               {navItems.map((item, i) => (
                 <a
                   key={item.label}
@@ -135,16 +149,30 @@ export default function Nav() {
                     if (item.href.startsWith("#")) {
                       e.preventDefault();
                       handleNavClick(item.href);
+                    } else {
+                      setIsMobileOpen(false);
                     }
                   }}
-                  className="block text-2xl text-[var(--color-textmuted)] uppercase tracking-widest hover:text-[var(--color-neon)] transition-colors duration-200"
+                  className="block text-3xl font-black text-[var(--color-text)] uppercase tracking-widest hover:text-[var(--color-neon)] transition-colors duration-200"
                   style={{ animationDelay: `${i * 0.05}s` }}
                 >
                   {item.label}
                 </a>
               ))}
+
+              {/* Commission CTA in mobile */}
+              <a
+                href="#request"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick("#request");
+                }}
+                className="inline-block mt-4 px-8 py-4 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-nightdark)] text-sm uppercase tracking-wider font-bold"
+              >
+                Commission
+              </a>
             </div>
-            
+
             {/* Close Button */}
             <button
               onClick={() => setIsMobileOpen(false)}

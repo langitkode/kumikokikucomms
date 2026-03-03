@@ -1,151 +1,197 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { siteConfig } from "@/lib/config";
 
 export default function Hero() {
   const { hero } = siteConfig;
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const kanjiRef = useRef<HTMLParagraphElement>(null);
+  const titleLine1Ref = useRef<HTMLSpanElement>(null);
+  const titleLine2Ref = useRef<HTMLSpanElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.2 });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.4 });
 
-    tl.fromTo(
-      titleRef.current,
-      { y: 80, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "cubic-bezier(0.8, 0, 0.2, 1)",
-      }
-    ).fromTo(
-      subtitleRef.current,
-      { y: 40, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: "cubic-bezier(0.6, 0, 0.4, 1)",
-      },
-      "-=0.6"
-    ).fromTo(
-      taglineRef.current,
-      { y: 20, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        ease: "cubic-bezier(0.6, 0, 0.4, 1)",
-      },
-      "-=0.4"
-    );
+      // Kanji fades in with scale
+      tl.fromTo(
+        kanjiRef.current,
+        { scale: 1.3, opacity: 0, filter: "blur(10px)" },
+        {
+          scale: 1,
+          opacity: 0.06,
+          filter: "blur(0px)",
+          duration: 1.5,
+          ease: "expo.out",
+        },
+      );
 
-    return () => {
-      tl.kill();
-    };
+      // Title line 1 — clip reveal from left
+      tl.fromTo(
+        titleLine1Ref.current,
+        { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+        {
+          clipPath: "inset(0 0% 0 0)",
+          opacity: 1,
+          duration: 1,
+          ease: "expo.out",
+        },
+        "-=1",
+      );
+
+      // Title line 2 — clip reveal with slight delay
+      tl.fromTo(
+        titleLine2Ref.current,
+        { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+        {
+          clipPath: "inset(0 0% 0 0)",
+          opacity: 1,
+          duration: 1,
+          ease: "expo.out",
+        },
+        "-=0.7",
+      );
+
+      // Line draws in
+      tl.fromTo(
+        lineRef.current,
+        { scaleX: 0, transformOrigin: "left center" },
+        { scaleX: 1, duration: 0.8, ease: "expo.out" },
+        "-=0.5",
+      );
+
+      // Tagline slides up
+      tl.fromTo(
+        taglineRef.current,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "cubic-bezier(0.6, 0, 0.4, 1)",
+        },
+        "-=0.3",
+      );
+
+      // CTA fades in
+      tl.fromTo(
+        ctaRef.current,
+        { y: 15, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "cubic-bezier(0.6, 0, 0.4, 1)",
+        },
+        "-=0.2",
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden bg-[var(--color-night)]">
-      {/* Night Gradient Background */}
-      <div className="absolute inset-0 bg-night-gradient" />
+    <section
+      id="home"
+      ref={sectionRef}
+      className="relative h-screen w-full overflow-hidden bg-[var(--color-studio-dark)]"
+    >
+      {/* Ambient layers — subtle */}
+      <div className="absolute inset-0 bg-night-gradient opacity-40" />
+      <div className="absolute inset-0 bg-grid-japanese opacity-5" />
+      <div className="absolute inset-0 noise-overlay" />
 
-      {/* Japanese Aesthetic Grid Overlay */}
-      <div className="absolute inset-0 bg-grid-japanese opacity-20" />
+      {/* Giant kanji watermark — center */}
+      <p
+        ref={kanjiRef}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40vw] md:text-[30vw] font-black text-[var(--color-text)] opacity-0 leading-none select-none pointer-events-none"
+      >
+        菊
+      </p>
 
-      {/* Lantern Glow Effects */}
-      <div className="absolute inset-0 bg-lantern-glow opacity-50" />
-
-      {/* Vertical Light Beams */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-neon)]/10 to-transparent" />
-        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-neonpink)]/10 to-transparent" />
-      </div>
-
-      {/* Content */}
+      {/* Main Content — centered, clean */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          {/* Japanese Decorative Element */}
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-4">
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-[var(--color-neon)] to-transparent" />
-              <p className="text-[var(--color-neon)] text-xs uppercase tracking-[0.5em]">
-                クミコキク
-              </p>
-              <div className="w-16 h-px bg-gradient-to-l from-transparent via-[var(--color-neon)] to-transparent" />
-            </div>
-          </div>
-
-          {/* Main Title */}
-          <h1
-            ref={titleRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-[var(--color-text)] mb-6 tracking-tighter"
-          >
-            {hero.title.split(" ").map((word, i) => (
-              <span key={i} className="relative inline-block">
-                {word}
-                {i < hero.title.split(" ").length - 1 && (
-                  <span className="text-[var(--color-neon)] text-glow-orange">.</span>
-                )}
-              </span>
-            ))}
+        <div className="text-center">
+          {/* Title */}
+          <h1 className="mb-6">
+            <span
+              ref={titleLine1Ref}
+              className="block text-[clamp(4rem,14vw,11rem)] font-black text-[var(--color-text)] leading-[0.8] tracking-[-0.05em] uppercase"
+            >
+              {hero.title}
+            </span>
+            <span
+              ref={titleLine2Ref}
+              className="block text-[clamp(4rem,14vw,11rem)] font-black leading-[0.8] tracking-[-0.05em] text-gradient-neon uppercase"
+            >
+              {hero.titleAccent}
+            </span>
           </h1>
 
-          {/* Subtitle */}
-          <p
-            ref={subtitleRef}
-            className="text-xl md:text-3xl text-[var(--color-neon)] font-medium uppercase tracking-widest mb-4 text-glow-orange"
-          >
-            {hero.subtitle}
-          </p>
+          {/* Accent line */}
+          <div
+            ref={lineRef}
+            className="w-24 h-[2px] bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] mx-auto mb-6"
+          />
 
-          {/* Tagline */}
+          {/* Tagline — minimal */}
           <p
             ref={taglineRef}
-            className="text-sm md:text-base text-[var(--color-textmuted)] uppercase tracking-wider max-w-xl mx-auto"
+            className="text-[var(--color-textmuted)] text-sm md:text-base tracking-[0.15em] uppercase font-mono mb-10"
           >
             {hero.tagline}
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex items-center justify-center gap-4 mt-12">
+          {/* CTAs */}
+          <div
+            ref={ctaRef}
+            className="flex flex-wrap items-center justify-center gap-4 relative"
+          >
+            {/* Floating Emote Decor */}
+            <div className="absolute -top-16 -right-12 w-20 h-20 opacity-90 pointer-events-none animate-float z-20">
+              <Image
+                src="/Assets/emotes/hi.png"
+                alt="Hi Emote"
+                fill
+                sizes="80px"
+                className="object-contain"
+              />
+            </div>
+
             <a
               href="#services"
-              className="group relative px-10 py-4 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-nightdark)] text-sm uppercase tracking-wider font-medium overflow-hidden shadow-lg"
+              className="group relative px-8 py-4 bg-[var(--color-neon)] text-[var(--color-studio-dark)] text-[11px] uppercase tracking-[0.2em] font-black font-mono overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(232,76,255,0.4)] rounded-sm"
             >
               <span className="relative z-10">View Services</span>
-              <div className="absolute inset-0 bg-[var(--color-text)] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <span className="absolute inset-0 z-10 flex items-center justify-center text-[var(--color-nightdark)] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute inset-0 bg-[var(--color-neonpink)] transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
+              <span className="absolute inset-0 z-10 flex items-center justify-center text-[var(--color-nightdark)] text-xs uppercase tracking-[0.15em] font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
                 View Services
               </span>
             </a>
             <a
               href="/gallery"
-              className="px-10 py-4 border border-[var(--color-neon)]/50 text-[var(--color-text)] text-sm uppercase tracking-wider font-medium hover:bg-[var(--color-neon)]/10 hover:border-[var(--color-neon)] hover:text-glow-orange transition-all duration-200"
+              className="px-8 py-4 border border-[var(--color-text)]/20 text-[var(--color-text)] text-xs uppercase tracking-[0.15em] font-medium hover:border-[var(--color-neon)] hover:text-[var(--color-neon)] transition-all duration-300"
             >
               Portfolio
             </a>
           </div>
         </div>
-
-        {/* Minimal Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
-          <p className="text-[var(--color-textdim)] text-[10px] uppercase tracking-widest">
-            Scroll
-          </p>
-          <div className="w-px h-16 bg-gradient-to-b from-[var(--color-neon)] via-[var(--color-neon)]/50 to-transparent animate-pulse" />
-        </div>
       </div>
 
-      {/* Minimal Corner Accents */}
-      <div className="absolute top-8 left-8 w-20 h-20 border-l border-t border-[var(--color-neon)]/40" />
-      <div className="absolute top-8 right-8 w-20 h-20 border-r border-t border-[var(--color-neonpink)]/40" />
-      <div className="absolute bottom-32 left-8 w-20 h-20 border-l border-b border-[var(--color-neonpink)]/40" />
-      <div className="absolute bottom-32 right-8 w-20 h-20 border-r border-b border-[var(--color-neon)]/40" />
+      {/* Bottom strip — very minimal */}
+      <div className="absolute bottom-0 left-0 right-0 z-20">
+        <div className="flex items-center justify-between px-6 lg:px-16 py-4 text-[9px] font-mono uppercase tracking-[0.2em] text-[var(--color-textdim)]">
+          <span>菊 Kumiko Kiku</span>
+          <span className="animate-float">↓</span>
+          <span className="hidden md:inline">Commission Open</span>
+        </div>
+      </div>
     </section>
   );
 }

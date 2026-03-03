@@ -68,24 +68,32 @@ export interface GalleryCategory {
 
 export interface HeroContent {
   title: string;
+  titleAccent: string;
   subtitle: string;
   tagline: string;
   copyright: string;
   backgroundImage: string;
-  backgroundVideo: string;
+  backgroundVideo?: string;
 }
 
 export interface AboutContent {
   heading: string;
+  headingMain: string;
   headingJP: string;
   paragraphs: string[];
   goal: string;
+  image: string;
 }
 
 export interface SiteConfig {
   hero: HeroContent;
   about: AboutContent;
   socialLinks: SocialLink[];
+  servicesHeading: {
+    title: string;
+    titleAccent: string;
+    description: string;
+  };
   services: ServiceSection[];
   pricing: PricingSection[];
   portfolio: PortfolioItem[];

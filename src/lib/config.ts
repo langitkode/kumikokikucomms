@@ -2,17 +2,18 @@ import { SiteConfig } from "./types";
 
 export const siteConfig: SiteConfig = {
   hero: {
-    title: "KUMIKO KIKU",
+    title: "KUMIKO",
+    titleAccent: "KIKU",
     subtitle: "COMMISSION",
     tagline: "VTuber Artist & Illustrator",
     copyright: "Copyright © KUMIKOKIKUCOMMS. All Rights Reserved.",
-    backgroundImage: "/profile.jpeg",
-    // Placeholder for future GIF background
+    backgroundImage: "/profile.webp",
     backgroundVideo: "/hero-bg.mp4",
   },
 
   about: {
     heading: "ABOUT",
+    headingMain: "CRAFTING AVATARS WITH PERSONALITY",
     headingJP: "アバウト",
     paragraphs: [
       "Hi! I'm Kiku ♡",
@@ -21,6 +22,7 @@ export const siteConfig: SiteConfig = {
       "I focus on soft details, expressive faces, and clean, well-organized files so everything looks beautiful and works smoothly for streaming and content creation.",
     ],
     goal: "Let's create something cute and memorable together ♡",
+    image: "/profile.webp",
   },
 
   socialLinks: [
@@ -31,6 +33,13 @@ export const siteConfig: SiteConfig = {
     { platform: "Discord", url: "https://discord.gg/", icon: "discord" },
     { platform: "Ko-fi", url: "https://ko-fi.com/", icon: "kofi" },
   ],
+
+  servicesHeading: {
+    title: "PROFESSIONAL",
+    titleAccent: "SOLUTIONS",
+    description:
+      "Everything you need for your VTubing journey — customizable to your needs ♡",
+  },
 
   services: [
     {
