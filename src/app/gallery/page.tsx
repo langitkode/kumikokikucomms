@@ -52,11 +52,8 @@ function GalleryContent() {
         url.searchParams.set("category", category);
         url.searchParams.set("limit", "20");
         if (cursor) url.searchParams.set("next_cursor", cursor);
-        
-        // Add timestamp to bypass browser cache
-        url.searchParams.set("_t", Date.now().toString());
 
-        const res = await fetch(url.toString(), { cache: "no-store" });
+        const res = await fetch(url.toString());
         
         if (res.ok) {
           const data = await res.json();
@@ -141,8 +138,8 @@ function GalleryContent() {
 
   return (
     <div className="min-h-screen bg-[var(--color-night)] flex flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-[var(--color-night)]/95 backdrop-blur-sm border-b border-[var(--color-nightlight)]">
+      {/* Header - solid color, no blur for performance */}
+      <header className="sticky top-0 z-40 bg-[var(--color-night)]/95 border-b border-[var(--color-nightlight)]">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
@@ -288,10 +285,10 @@ function GalleryContent() {
         )}
       </main>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal - solid color, no blur for performance */}
       {selectedImage !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-night)]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-night)]/98"
           onClick={handleLightboxClose}
         >
           <div

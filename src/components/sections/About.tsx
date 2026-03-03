@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,8 +17,21 @@ export default function About() {
   const imageRef = useRef<HTMLDivElement>(null);
   const textContentRef = useRef<HTMLDivElement>(null);
   const quoteRef = useRef<HTMLDivElement>(null);
+  const [isInViewport, setIsInViewport] = useState(false);
 
   useEffect(() => {
+    // Intersection Observer to pause animations when off-screen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInViewport(entry.isIntersecting);
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
     const ctx = gsap.context(() => {
       // Main Reveal Timeline
       const tl = gsap.timeline({
@@ -243,7 +256,10 @@ export default function About() {
                 />
 
                 {/* Visual Depth Accents — Glowing aura behind portrait */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[var(--color-neon)]/5 blur-[100px] rounded-full z-[-1] animate-neon-pulse" />
+                <div
+                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[var(--color-neon)]/5 blur-[100px] rounded-full z-[-1] ${isInViewport ? 'animate-neon-pulse' : ''}`}
+                  style={{ animationPlayState: isInViewport ? 'running' : 'paused' }}
+                />
 
                 {/* Floating Katakana Label */}
                 <div className="absolute top-1/4 -left-4 lg:-left-12 vertical-text">

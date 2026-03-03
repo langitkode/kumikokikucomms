@@ -72,7 +72,7 @@ export default function GalleryStudio() {
   const fetchGallery = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/gallery", { cache: "no-store" });
+      const response = await fetch("/api/gallery");
       if (response.ok) {
         const data = await response.json();
         setItems(data.resources || []);
@@ -204,8 +204,8 @@ export default function GalleryStudio() {
 
   return (
     <div className="min-h-screen bg-[var(--color-studio-dark)] text-[var(--color-text)]">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-studio-slate)]/80 backdrop-blur-md border-b border-hairline border-[var(--color-textdim)]/10 py-4 px-6 lg:px-16 flex items-center justify-between">
+      {/* Header - solid color, no blur for performance */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-studio-slate)]/95 border-b border-hairline border-[var(--color-textdim)]/10 py-4 px-6 lg:px-16 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h1 className="text-lg font-black tracking-tighter uppercase">
             Gallery <span className="text-[var(--color-neon)]">Studio</span>

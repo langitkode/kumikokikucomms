@@ -85,7 +85,7 @@ export default function UploadModal({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:p-8">
       <div
-        className="absolute inset-0 bg-[var(--color-studio-dark)]/95 backdrop-blur-sm"
+        className="absolute inset-0 bg-[var(--color-studio-dark)]/98"
         onClick={onClose}
       />
 

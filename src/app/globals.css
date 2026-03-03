@@ -434,6 +434,29 @@ h6 {
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.animate-float.running {
+  animation-play-state: running;
+}
+
+.animate-neon-pulse {
+  animation: neonPulse 3s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.animate-neon-pulse.running {
+  animation-play-state: running;
+}
+
+.animate-neon-flicker {
+  animation: neonFlicker 4s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.animate-neon-flicker.running {
+  animation-play-state: running;
 }
 
 /* ===== Lenis Smooth Scroll ===== */
@@ -451,6 +474,22 @@ html.lenis {
 }
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* ===== GPU Acceleration Hints ===== */
+.animate-float,
+.animate-neon-pulse,
+.animate-neon-flicker {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Image containers with parallax/hover effects */
+.group-hover\:scale-105,
+.transition-transform {
+  will-change: transform;
 }
 
 /* ===== Reduced Motion ===== */

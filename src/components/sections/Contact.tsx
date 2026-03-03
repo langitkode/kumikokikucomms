@@ -16,6 +16,25 @@ export default function Contact() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Toggle float animations when in viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const floatElements = sectionRef.current?.querySelectorAll('.animate-float');
+        floatElements?.forEach(el => {
+          el.classList.toggle('running', entry.isIntersecting);
+        });
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {

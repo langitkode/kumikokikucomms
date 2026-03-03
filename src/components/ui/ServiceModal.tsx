@@ -21,12 +21,15 @@ export default function ServiceModal({
   accentColor,
 }: ServiceModalProps) {
   const [portfolioItems, setPortfolioItems] = useState<any[]>([]);
+  const [hasFetched, setHasFetched] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchItems() {
+      if (hasFetched) return; // Prevent duplicate fetches
+      
       try {
         const res = await fetch("/api/gallery");
         if (res.ok) {
@@ -37,13 +40,15 @@ export default function ServiceModal({
           } else {
             setPortfolioItems(siteConfig.portfolio);
           }
+          setHasFetched(true);
         }
       } catch (e) {
         setPortfolioItems(siteConfig.portfolio);
+        setHasFetched(true);
       }
     }
     if (isOpen) fetchItems();
-  }, [isOpen]);
+  }, [isOpen, hasFetched]);
 
   useEffect(() => {
     if (isOpen) {
@@ -91,9 +96,9 @@ export default function ServiceModal({
       ref={overlayRef}
       className="fixed inset-0 z-[100] flex items-stretch justify-end opacity-0"
     >
-      {/* Backdrop */}
+      {/* Backdrop - solid color, no blur for performance */}
       <div
-        className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-slate-950/90"
         onClick={onClose}
       />
 

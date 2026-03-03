@@ -228,10 +228,10 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal - solid color, no blur for performance */}
       {selectedImage !== null && items[selectedImage] && (
         <div
-          className="fixed inset-0 z-[110] flex items-center justify-center bg-[var(--color-studio-dark)]/98 backdrop-blur-md"
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-[var(--color-studio-dark)]/98"
           onClick={handleLightboxClose}
         >
           <div

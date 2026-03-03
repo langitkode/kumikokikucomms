@@ -3,7 +3,7 @@ import "./globals.css";
 import LenisClient from "@/components/LenisClient";
 
 export const metadata: Metadata = {
-  title: "Kumiko Kiku Commission — VTuber Artist & Illustrator",
+  title: "Kumiko Kiku Commission - VTuber Artist & Illustrator",
   description:
     "Professional VTuber artist specializing in VTuber models, PNGtubers, stream emotes, and custom illustrations. Commissions open!",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "kumikokikucomms",
   ],
   openGraph: {
-    title: "Kumiko Kiku Commission — VTuber Artist & Illustrator",
+    title: "Kumiko Kiku Commission - VTuber Artist & Illustrator",
     description:
       "Professional VTuber artist specializing in VTuber models, PNGtubers, stream emotes, and custom illustrations.",
     type: "website",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kumiko Kiku Commission — VTuber Artist & Illustrator",
+    title: "Kumiko Kiku Commission - VTuber Artist & Illustrator",
     description:
       "Professional VTuber artist. Commissions open for VTuber models, PNGtubers, emotes & illustrations.",
     images: ["/profile.jpeg"],

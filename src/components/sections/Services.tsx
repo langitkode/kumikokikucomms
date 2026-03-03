@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -20,6 +20,25 @@ export default function Services() {
     (typeof services)[0] | null
   >(null);
   const [selectedAccent, setSelectedAccent] = useState<string>("#e84cff");
+
+  // Toggle float animations when in viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const floatElements = sectionRef.current?.querySelectorAll('.animate-float');
+        floatElements?.forEach(el => {
+          el.classList.toggle('running', entry.isIntersecting);
+        });
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const accentColors = [
     { hex: "#e84cff", text: "text-[var(--color-neon)]" },

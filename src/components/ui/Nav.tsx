@@ -44,7 +44,7 @@ export default function Nav() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-[var(--color-studio-dark)]/90 backdrop-blur-md py-3 border-b border-hairline border-[var(--color-textdim)]/10"
+            ? "bg-[var(--color-studio-dark)]/95 py-3 border-b border-hairline border-[var(--color-textdim)]/10"
             : "bg-transparent py-5"
         }`}
       >
@@ -129,9 +129,9 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - solid color, no blur for performance */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-40 bg-[var(--color-nightdark)]/95 backdrop-blur-lg md:hidden">
+        <div className="fixed inset-0 z-40 bg-[var(--color-nightdark)]/98 md:hidden">
           <div className="flex flex-col items-center justify-center h-full px-6">
             {/* Decorative kanji */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">

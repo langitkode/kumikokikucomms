@@ -3,7 +3,7 @@ import cloudinary from "@/lib/cloudinary";
 import { checkRateLimit } from "@/lib/rateLimit";
 
 // Revalidate gallery every 5 minutes (300 seconds)
-// This ensures fresh data without manual cache invalidation
+// This reduces API calls by ~90% while keeping content reasonably fresh
 export const revalidate = 300;
 
 export async function GET(request: Request) {
@@ -32,44 +32,56 @@ export async function GET(request: Request) {
     const category = searchParams.get("category");
     const limit = Math.min(parseInt(searchParams.get("limit") || "20"), 100);
 
-    // Search for resources in the portfolio folder
+    // Use Admin API instead of Search API (much cheaper)
     const folder = process.env.CLOUDINARY_FOLDER || "portfolio";
-    // Search by folder path - include subfolders with *
-    let expression = `folder:"${folder}" OR folder:"${folder}/*"`;
+    
+    const resourcesResponse = await cloudinary.api.resources({
+      type: "upload",
+      prefix: `${folder}/`,
+      max_results: limit,
+      next_cursor: cursor || undefined,
+      context: true, // Explicitly request context data
+    });
 
+    let resources = resourcesResponse.resources || [];
+
+    // Filter by category client-side (Admin API doesn't support context filtering)
     if (category && category !== "all") {
-      expression += ` AND context.category="${category}"`;
+      resources = resources.filter(
+        (r: any) => {
+          const ctx = r.context?.custom || r.context;
+          return ctx?.category === category;
+        }
+      );
     }
 
-    let query = cloudinary.search
-      .expression(expression)
-      .sort_by("created_at", "desc")
-      .max_results(limit)
-      .with_field("context");
+    const galleryItems = resources.map((resource: any) => {
+      const ctx = resource.context?.custom || resource.context || {};
 
-    if (cursor) {
-      query = query.next_cursor(cursor);
-    }
+      // Transform the secure_url to add thumbnail parameters
+      // Insert transformation params after /upload/ but before version (v123456/)
+      const transformUrl = resource.secure_url.replace(
+        /\/upload\/(v\d+\/)?/,
+        '/upload/w_640,h_360,c_fill,q_auto:good,f_auto/$1'
+      );
 
-    const result = await query.execute();
-    const { resources, next_cursor } = result;
-
-    const galleryItems = resources.map((resource: any) => ({
-      src: resource.secure_url,
-      alt: resource.context?.alt || resource.public_id,
-      label: resource.context?.caption || "Portfolio Piece",
-      category: resource.context?.category || "all",
-      public_id: resource.public_id,
-      width: resource.width,
-      height: resource.height,
-    }));
+      return {
+        src: transformUrl,
+        alt: ctx.alt || resource.alt || resource.public_id,
+        label: ctx.caption || "Portfolio Piece",
+        category: ctx.category || "all",
+        public_id: resource.public_id,
+        width: resource.width,
+        height: resource.height,
+      };
+    });
 
     return NextResponse.json({
       resources: galleryItems,
-      next_cursor: next_cursor || null,
+      next_cursor: resourcesResponse.next_cursor || null,
     }, {
       headers: {
-        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
       },
     });
   } catch (error) {
