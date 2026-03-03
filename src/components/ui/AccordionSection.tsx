@@ -1,24 +1,26 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { useState, useRef, useEffect } from "react";
+import { animateAccordion } from "@/lib/animations";
 
 interface AccordionSectionProps {
   title: string;
-  subtitle?: string;
+  titleJP?: string;
   description: string;
-  bulletPoints?: string[];
+  features?: string[];
   important?: string[];
+  pricing?: Record<string, string>;
   isOpen?: boolean;
   onToggle?: () => void;
 }
 
 export default function AccordionSection({
   title,
-  subtitle,
+  titleJP,
   description,
-  bulletPoints,
-  important,
+  features = [],
+  important = [],
+  pricing,
   isOpen = false,
   onToggle,
 }: AccordionSectionProps) {
@@ -27,22 +29,7 @@ export default function AccordionSection({
 
   useEffect(() => {
     if (!contentRef.current) return;
-
-    if (isExpanded) {
-      gsap.to(contentRef.current, {
-        height: "auto",
-        opacity: 1,
-        duration: 0.4,
-        ease: "power2.out",
-      });
-    } else {
-      gsap.to(contentRef.current, {
-        height: 0,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.in",
-      });
-    }
+    animateAccordion(contentRef.current, isExpanded);
   }, [isExpanded]);
 
   const handleToggle = () => {
@@ -51,42 +38,40 @@ export default function AccordionSection({
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 overflow-hidden">
-      {/* Header - Always Visible */}
+    <div className="border border-ash bg-charcoal">
+      {/* Header */}
       <button
         onClick={handleToggle}
-        className="w-full px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors"
+        className="w-full px-6 py-5 flex items-center justify-between gap-4 hover:bg-sumi-light transition-colors"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 text-left">
           <span
-            className={`transform transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+            className={`transform transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
           >
             <svg
-              width="20"
-              height="20"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
-              className="text-orange-primary"
+              strokeWidth="1.5"
+              className="text-aka"
             >
               <polyline points="6 9 12 15 18 9" />
             </svg>
           </span>
-          <div className="text-left">
-            <h3 className="text-lg md:text-xl font-bold text-white">
+          <div>
+            <h3 className="text-base md:text-lg font-bold text-shiro uppercase tracking-wider">
               {title}
             </h3>
-            {subtitle && (
-              <p className="text-orange-light text-sm font-medium">
-                {subtitle}
-              </p>
+            {titleJP && (
+              <p className="text-aka text-xs font-medium">{titleJP}</p>
             )}
           </div>
         </div>
       </button>
 
-      {/* Content - Expandable */}
+      {/* Content */}
       <div
         ref={contentRef}
         className="overflow-hidden"
@@ -94,37 +79,66 @@ export default function AccordionSection({
       >
         <div className="px-6 pb-6 pt-2">
           {/* Divider */}
-          <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-orange-primary/40 to-transparent mb-6" />
+          <div className="w-full h-px bg-ash mb-6" />
 
           {/* Description */}
-          <p className="text-white/70 text-sm md:text-base leading-relaxed mb-4">
+          <p className="text-ash-light text-sm leading-relaxed mb-6">
             {description}
           </p>
 
-          {/* Bullet Points */}
-          {bulletPoints && bulletPoints.length > 0 && (
-            <ul className="space-y-2 mb-6">
-              {bulletPoints.map((point, i) => (
-                <li
-                  key={i}
-                  className="text-white/60 text-sm md:text-base flex items-start gap-3"
-                >
-                  <span className="w-1.5 h-1.5 bg-orange-primary rounded-full flex-shrink-0 mt-1.5" />
-                  {point}
-                </li>
-              ))}
-            </ul>
+          {/* Features */}
+          {features.length > 0 && (
+            <div className="mb-6">
+              <p className="text-shiro text-xs font-bold uppercase tracking-wider mb-3">
+                ✧ Features
+              </p>
+              <ul className="space-y-2">
+                {features.map((feature, i) => (
+                  <li
+                    key={i}
+                    className="text-ash-light text-sm flex items-start gap-3"
+                  >
+                    <span className="w-1 h-1 bg-aka flex-shrink-0 mt-1.5" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Pricing */}
+          {pricing && Object.keys(pricing).length > 0 && (
+            <div className="mb-6">
+              <p className="text-shiro text-xs font-bold uppercase tracking-wider mb-3">
+                ✧ Pricing
+              </p>
+              <div className="space-y-2">
+                {Object.entries(pricing).map(([key, value], i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between text-sm border-b border-ash-light pb-2"
+                  >
+                    <span className="text-ash-light capitalize">
+                      {key.replace(/([A-Z])/g, " $1").trim()}
+                    </span>
+                    <span className="text-shiro font-mono font-medium">
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
           {/* Important Notes */}
-          {important && important.length > 0 && (
-            <div className="bg-orange-primary/10 border border-orange-primary/30 rounded-xl p-4 mb-6">
-              <p className="text-orange-light font-semibold mb-2 text-xs uppercase tracking-wider">
+          {important.length > 0 && (
+            <div className="border border-aka bg-aka/5 p-4">
+              <p className="text-aka font-bold text-xs uppercase tracking-wider mb-2">
                 ⚠ Important
               </p>
               <ul className="space-y-1">
                 {important.map((item, i) => (
-                  <li key={i} className="text-white/60 text-sm">
+                  <li key={i} className="text-ash-light text-sm">
                     • {item}
                   </li>
                 ))}

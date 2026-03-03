@@ -1,6 +1,6 @@
 /**
- * GSAP Animation Presets and Utilities
- * Centralized animation configurations for consistent feel
+ * GSAP Animation Presets - Japanese Urban Minimalist
+ * Sharp, precise, performance-optimized animations
  */
 
 import { gsap } from "gsap";
@@ -8,24 +8,25 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ===== Easing Presets =====
+// ===== Easing Presets (Urban Minimalist) =====
 export const easings = {
-  smooth: "power3.out",
-  bounce: "elastic.out(1, 0.5)",
-  snap: "power4.out",
-  gentle: "power2.out",
-  expo: "expo.out",
+  sharp: "cubic-bezier(0.6, 0, 0.4, 1)",
+  snap: "cubic-bezier(0.7, 0, 0.3, 1)",
+  gentle: "cubic-bezier(0.5, 0, 0.3, 1)",
+  expo: "cubic-bezier(0.8, 0, 0.2, 1)",
+  linear: "linear",
 } as const;
 
 // ===== Duration Presets =====
 export const durations = {
-  fast: 0.3,
-  normal: 0.6,
-  slow: 1,
-  slower: 1.5,
+  instant: 0.15,
+  fast: 0.25,
+  normal: 0.4,
+  slow: 0.6,
+  slower: 1,
 } as const;
 
-// ===== Text Reveal Animation =====
+// ===== Text Reveal Animation (Sharp) =====
 export function animateTextReveal(element: HTMLElement) {
   const text = element.textContent;
   if (!text) return;
@@ -46,22 +47,22 @@ export function animateTextReveal(element: HTMLElement) {
       opacity: 1,
       duration: durations.normal,
       ease: easings.snap,
-      delay: i * 0.05,
+      delay: i * 0.03,
     });
   });
 }
 
-// ===== Hero Title Animation =====
+// ===== Hero Title Animation (Minimal) =====
 export function animateHeroTitle(
   title: HTMLElement,
   subtitle?: HTMLElement,
-  copyright?: HTMLElement
+  tagline?: HTMLElement
 ) {
-  const tl = gsap.timeline({ delay: 0.2 });
+  const tl = gsap.timeline({ delay: 0.1 });
 
   tl.fromTo(
     title,
-    { y: 60, opacity: 0 },
+    { y: 40, opacity: 0 },
     {
       y: 0,
       opacity: 1,
@@ -73,20 +74,6 @@ export function animateHeroTitle(
   if (subtitle) {
     tl.fromTo(
       subtitle,
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: durations.normal,
-        ease: easings.gentle,
-      },
-      "-=0.5"
-    );
-  }
-
-  if (copyright) {
-    tl.fromTo(
-      copyright,
       { y: 20, opacity: 0 },
       {
         y: 0,
@@ -94,7 +81,21 @@ export function animateHeroTitle(
         duration: durations.normal,
         ease: easings.gentle,
       },
-      "-=0.4"
+      "-=0.3"
+    );
+  }
+
+  if (tagline) {
+    tl.fromTo(
+      tagline,
+      { y: 15, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: durations.fast,
+        ease: easings.gentle,
+      },
+      "-=0.2"
     );
   }
 
@@ -109,19 +110,41 @@ export function animateSectionHeader(
   const { delay = 0 } = options || {};
 
   const elements = container.querySelectorAll<HTMLElement>(
-    "h2, p, .divider-orange"
+    "h2, p, .divider-sharp, .divider-accent"
   );
 
   gsap.fromTo(
     elements,
+    { y: 30, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: durations.normal,
+      stagger: 0.08,
+      ease: easings.sharp,
+      delay,
+      scrollTrigger: {
+        trigger: container,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
+      },
+    }
+  );
+}
+
+// ===== Card Stagger Animation (Sharp) =====
+export function animateCardStagger(container: HTMLElement) {
+  const cards = container.querySelectorAll<HTMLElement>(".card-sharp");
+
+  gsap.fromTo(
+    cards,
     { y: 40, opacity: 0 },
     {
       y: 0,
       opacity: 1,
       duration: durations.normal,
-      stagger: 0.1,
-      ease: easings.smooth,
-      delay,
+      stagger: 0.06,
+      ease: easings.sharp,
       scrollTrigger: {
         trigger: container,
         start: "top 75%",
@@ -131,22 +154,23 @@ export function animateSectionHeader(
   );
 }
 
-// ===== Card Stagger Animation =====
-export function animateCardStagger(container: HTMLElement) {
-  const cards = container.querySelectorAll<HTMLElement>(".card");
-
+// ===== Grid Reveal Animation =====
+export function animateGridReveal(items: HTMLElement[]) {
   gsap.fromTo(
-    cards,
-    { y: 60, opacity: 0, scale: 0.95 },
+    items,
+    { y: 30, opacity: 0 },
     {
       y: 0,
       opacity: 1,
-      scale: 1,
       duration: durations.normal,
-      stagger: 0.1,
-      ease: easings.smooth,
+      stagger: {
+        each: 0.05,
+        from: "start",
+        grid: [3, 2],
+      },
+      ease: easings.snap,
       scrollTrigger: {
-        trigger: container,
+        trigger: items[0]?.parentElement,
         start: "top 75%",
         toggleActions: "play none none reverse",
       },
@@ -154,43 +178,72 @@ export function animateCardStagger(container: HTMLElement) {
   );
 }
 
-// ===== Floating Particles Animation =====
-export function createFloatingParticles(
-  container: HTMLElement,
-  count = 20
-) {
-  for (let i = 0; i < count; i++) {
-    const particle = document.createElement("div");
-    particle.className = "particle";
-
-    // Random properties - only add non-empty classes
-    if (Math.random() > 0.8) {
-      particle.classList.add("particle--large");
+// ===== Line Draw Animation =====
+export function animateLineDraw(element: HTMLElement) {
+  gsap.fromTo(
+    element,
+    { width: 0 },
+    {
+      width: "100%",
+      duration: durations.slow,
+      ease: easings.expo,
+      scrollTrigger: {
+        trigger: element,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
     }
-    if (Math.random() > 0.9) {
-      particle.classList.add("particle--sparkle");
-    }
-
-    // Random position
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = `${Math.random() * 100}%`;
-
-    // Random animation properties
-    const duration = 10 + Math.random() * 20;
-    const delay = Math.random() * 5;
-    const driftX = (Math.random() - 0.5) * 200;
-    const driftY = -100 - Math.random() * 100;
-
-    particle.style.setProperty("--duration", `${duration}s`);
-    particle.style.setProperty("--delay", `${delay}s`);
-    particle.style.setProperty("--drift-x", `${driftX}px`);
-    particle.style.setProperty("--drift-y", `${driftY}px`);
-
-    container.appendChild(particle);
-  }
+  );
 }
 
-// ===== Image Parallax on Hover =====
+// ===== Fade In Up (Minimal) =====
+export function animateFadeInUp(
+  element: HTMLElement,
+  distance = 30,
+  duration = durations.normal
+) {
+  gsap.fromTo(
+    element,
+    { y: distance, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration,
+      ease: easings.sharp,
+      scrollTrigger: {
+        trigger: element,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    }
+  );
+}
+
+// ===== Slide In From Side =====
+export function animateSlideIn(
+  element: HTMLElement,
+  direction: "left" | "right" = "left"
+) {
+  const x = direction === "left" ? -40 : 40;
+
+  gsap.fromTo(
+    element,
+    { x, opacity: 0 },
+    {
+      x: 0,
+      opacity: 1,
+      duration: durations.normal,
+      ease: easings.sharp,
+      scrollTrigger: {
+        trigger: element,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    }
+  );
+}
+
+// ===== Image Parallax on Hover (Performance Optimized) =====
 export function initImageParallax(images: NodeListOf<Element>) {
   images.forEach((img) => {
     img.addEventListener("mousemove", ((e: MouseEvent) => {
@@ -198,53 +251,27 @@ export function initImageParallax(images: NodeListOf<Element>) {
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      gsap.to((img.querySelector("img") || img) as Element, {
-        x: x * 20,
-        y: y * 20,
-        duration: 0.5,
+      gsap.to(img.querySelector("img"), {
+        x: x * 15,
+        y: y * 15,
+        duration: 0.3,
         ease: easings.gentle,
+        overwrite: true,
       });
     }) as EventListener);
 
     img.addEventListener("mouseleave", (() => {
-      gsap.to((img.querySelector("img") || img) as Element, {
+      gsap.to(img.querySelector("img"), {
         x: 0,
         y: 0,
-        duration: 0.5,
+        duration: 0.4,
         ease: easings.gentle,
       });
     }) as EventListener);
   });
 }
 
-// ===== Magnetic Button Effect =====
-export function initMagneticButtons(buttons: NodeListOf<Element>) {
-  buttons.forEach((btn) => {
-    btn.addEventListener("mousemove", ((e: MouseEvent) => {
-      const rect = (btn as HTMLElement).getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
-      const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
-
-      gsap.to(btn, {
-        x: x * 10,
-        y: y * 10,
-        duration: 0.3,
-        ease: easings.gentle,
-      });
-    }) as EventListener);
-
-    btn.addEventListener("mouseleave", (() => {
-      gsap.to(btn, {
-        x: 0,
-        y: 0,
-        duration: 0.5,
-        ease: "power3.out",
-      });
-    }) as EventListener);
-  });
-}
-
-// ===== Pricing Tab Transition =====
+// ===== Pricing Tab Transition (Sharp) =====
 export function animatePricingTab(
   fromElement: HTMLElement,
   toElement: HTMLElement
@@ -253,15 +280,15 @@ export function animatePricingTab(
 
   tl.to(fromElement, {
     opacity: 0,
-    scale: 0.95,
+    scale: 0.98,
     duration: durations.fast,
-    ease: easings.smooth,
+    ease: easings.snap,
   })
     .set(fromElement, { display: "none" })
     .set(toElement, { display: "block" })
     .fromTo(
       toElement,
-      { opacity: 0, scale: 1.05 },
+      { opacity: 0, scale: 1.02 },
       {
         opacity: 1,
         scale: 1,
@@ -273,37 +300,157 @@ export function animatePricingTab(
   return tl;
 }
 
-// ===== Gallery Item Reveal =====
+// ===== Accordion Reveal (Sharp) =====
+export function animateAccordion(
+  content: HTMLElement,
+  isOpen: boolean
+) {
+  if (isOpen) {
+    gsap.to(content, {
+      height: "auto",
+      opacity: 1,
+      duration: durations.normal,
+      ease: easings.sharp,
+    });
+  } else {
+    gsap.to(content, {
+      height: 0,
+      opacity: 0,
+      duration: durations.fast,
+      ease: easings.snap,
+    });
+  }
+}
+
+// ===== Button Hover Magnetic (Subtle) =====
+export function initMagneticButtons(buttons: NodeListOf<Element>) {
+  buttons.forEach((btn) => {
+    btn.addEventListener("mousemove", ((e: MouseEvent) => {
+      const rect = (btn as HTMLElement).getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+      const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+
+      gsap.to(btn, {
+        x: x * 5,
+        y: y * 5,
+        duration: 0.2,
+        ease: easings.gentle,
+      });
+    }) as EventListener);
+
+    btn.addEventListener("mouseleave", (() => {
+      gsap.to(btn, {
+        x: 0,
+        y: 0,
+        duration: 0.3,
+        ease: easings.sharp,
+      });
+    }) as EventListener);
+  });
+}
+
+// ===== Gallery Image Reveal =====
 export function animateGalleryReveal(items: HTMLElement[]) {
   gsap.fromTo(
     items,
-    { y: 80, opacity: 0, rotate: 2 },
+    { y: 40, opacity: 0 },
     {
       y: 0,
       opacity: 1,
-      rotate: 0,
-      duration: durations.slow,
-      stagger: 0.08,
-      ease: easings.expo,
+      duration: durations.normal,
+      stagger: 0.06,
+      ease: easings.snap,
       scrollTrigger: {
         trigger: items[0]?.parentElement,
-        start: "top 70%",
+        start: "top 75%",
         toggleActions: "play none none reverse",
       },
     }
   );
 }
 
-// ===== Smooth Scroll to Element =====
-export function scrollToElement(elementId: string, offset = 0) {
-  const element = document.getElementById(elementId);
-  if (!element) return;
+// ===== Lightbox Open Animation =====
+export function animateLightboxOpen(element: HTMLElement) {
+  gsap.fromTo(
+    element,
+    { opacity: 0, scale: 0.95 },
+    {
+      opacity: 1,
+      scale: 1,
+      duration: durations.normal,
+      ease: easings.expo,
+    }
+  );
+}
 
-  const y = element.getBoundingClientRect().top + window.scrollY - offset;
-
-  gsap.to(window, {
-    scrollTo: y,
-    duration: durations.slower,
-    ease: easings.expo,
+// ===== Lightbox Close Animation =====
+export function animateLightboxClose(
+  element: HTMLElement,
+  onComplete: () => void
+) {
+  gsap.to(element, {
+    opacity: 0,
+    scale: 0.95,
+    duration: durations.fast,
+    ease: easings.snap,
+    onComplete,
   });
+}
+
+// ===== Scroll Progress Indicator =====
+export function initScrollProgress(indicator: HTMLElement) {
+  gsap.to(indicator, {
+    width: "100%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: document.body,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+    },
+  });
+}
+
+// ===== Counter Animation =====
+export function animateCounter(
+  element: HTMLElement,
+  end: number,
+  duration = 2
+) {
+  gsap.to(element, {
+    innerText: end,
+    duration,
+    ease: easings.gentle,
+    snap: { innerText: 1 },
+    scrollTrigger: {
+      trigger: element,
+      start: "top 85%",
+      toggleActions: "play none none reverse",
+    },
+    onUpdate: function () {
+      element.innerText = Math.ceil(this.targets()[0].innerText);
+    },
+  });
+}
+
+// ===== Stagger List Items =====
+export function animateStaggerList(container: HTMLElement) {
+  const items = container.querySelectorAll<HTMLElement>("li, .list-item");
+
+  gsap.fromTo(
+    items,
+    { x: -20, opacity: 0 },
+    {
+      x: 0,
+      opacity: 1,
+      duration: durations.fast,
+      stagger: 0.04,
+      ease: easings.sharp,
+      scrollTrigger: {
+        trigger: container,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    }
+  );
 }

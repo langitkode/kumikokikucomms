@@ -1,87 +1,283 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
-/* ===== Orange Theme Palette (from profile.jpeg) ===== */
+/* ===== Japanese Urban Minimalist Theme ===== */
 @theme inline {
-  --color-background: #0a0a0a;
-  --color-foreground: #ededed;
+  /* Primary Colors */
+  --color-sumi: #0a0a0a;
+  --color-sumi-light: #111111;
+  --color-sumi-dark: #050505;
+  --color-shiro: #fafafa;
+  --color-shiro-off: #f0f0f0;
 
-  /* Orange Primary (hair color) */
-  --color-orange-primary: #f9963d;
-  --color-orange-dark: #d9772e;
-  --color-orange-light: #ffb366;
-  --color-orange-glow: #ff8c42;
-  --color-orange-pale: #ffe4c7;
+  /* Accent - Japanese Red */
+  --color-aka: #c41e3a;
+  --color-aka-dark: #8b0000;
+  --color-aka-light: #e63950;
 
-  /* Accent Colors */
-  --color-red-accent: #e63946;
-  --color-gold: #ffd700;
-  --color-cream: #fef6ee;
-  --color-cream-dark: #f5e6d3;
+  /* VTuber Pop Accents */
+  --color-neon-pink: #ff2d7a;
+  --color-electric-blue: #00d4ff;
+  --color-gold: #d4af37;
 
-  /* Dark Tones */
+  /* Grays */
   --color-charcoal: #1a1a1a;
-  --color-charcoal-light: #2a2a2a;
-  --color-charcoal-dark: #0f0f0f;
+  --color-ash: #888888;
+  --color-ash-light: #aaaaaa;
+  --color-paper: #f5f5f5;
 
-  /* Premium Fonts - More unique, less AI-generated feel */
-  --font-heading: "Fraunces", Georgia, serif;
-  --font-body: "Outfit", system-ui, sans-serif;
+  /* Typography */
+  --font-heading: "Noto Sans JP", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-body: system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --spacing-unit: 8px;
 }
 
-/* ===== Base Reset & Global Styles ===== */
-* {
-  scroll-behavior: smooth;
+/* ===== Base Reset ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
+  scroll-behavior: smooth;
   overflow-x: hidden;
+  font-size: 16px;
 }
 
 body {
   font-family: var(--font-body);
-  background: var(--color-charcoal);
-  color: var(--color-foreground);
-  overflow-x: hidden;
+  background: var(--color-sumi);
+  color: var(--color-shiro);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--color-orange-primary);
-  color: var(--color-charcoal);
+  background: var(--color-aka);
+  color: var(--color-shiro);
 }
 
-/* ===== Custom Scrollbar ===== */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-charcoal-dark);
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-orange-dark), var(--color-orange-primary));
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--color-orange-primary), var(--color-orange-light));
+/* ===== Typography ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
-/* ===== Hide Scrollbar Utility ===== */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.text-gradient-aka {
+  background: linear-gradient(135deg, var(--color-aka-light), var(--color-aka));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* ===== Full-viewport Section with Varied Heights ===== */
+.text-gradient-neon {
+  background: linear-gradient(135deg, var(--color-neon-pink), var(--color-aka));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Borders & Dividers ===== */
+.border-sharp {
+  border: 1px solid var(--color-ash);
+}
+
+.border-sharp-light {
+  border: 1px solid rgba(136, 136, 136, 0.3);
+}
+
+.border-sharp-accent {
+  border: 1px solid var(--color-aka);
+}
+
+.divider-sharp {
+  width: 100%;
+  height: 1px;
+  background: var(--color-ash);
+}
+
+.divider-accent {
+  width: 100%;
+  height: 2px;
+  background: var(--color-aka);
+}
+
+.divider-gradient {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-ash), transparent);
+}
+
+/* ===== Background Patterns ===== */
+.bg-grid-urban {
+  background-image:
+    linear-gradient(rgba(136, 136, 136, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(136, 136, 136, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-dot-minimal {
+  background-image: radial-gradient(rgba(136, 136, 136, 0.4) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+}
+
+.bg-mesh-urban {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(196, 30, 58, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 45, 122, 0.06) 0%, transparent 50%);
+}
+
+/* ===== Solid Panels (No Glassmorphism) ===== */
+.panel-solid {
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-ash);
+}
+
+.panel-paper {
+  background: var(--color-paper);
+  color: var(--color-sumi);
+}
+
+.panel-accent {
+  background: var(--color-aka);
+  color: var(--color-shiro);
+}
+
+/* ===== Sharp Buttons ===== */
+.btn-sharp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.6, 0, 0.4, 1);
+  will-change: transform;
+}
+
+.btn-sharp:hover {
+  transform: translateY(-2px);
+}
+
+.btn-sharp:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: var(--color-aka);
+  color: var(--color-shiro);
+  border-color: var(--color-aka);
+}
+
+.btn-primary:hover {
+  background: var(--color-aka-dark);
+  border-color: var(--color-aka-dark);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-shiro);
+  border-color: var(--color-ash);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-aka);
+  color: var(--color-aka);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ash);
+  border: none;
+}
+
+.btn-ghost:hover {
+  color: var(--color-shiro);
+}
+
+/* ===== Sharp Cards ===== */
+.card-sharp {
+  background: var(--color-charcoal);
+  border: 1px solid var(--color-ash);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.card-sharp:hover {
+  border-color: var(--color-aka);
+}
+
+.card-paper {
+  background: var(--color-paper);
+  color: var(--color-sumi);
+  border: 1px solid var(--color-ash);
+}
+
+/* ===== Image Hover Effects ===== */
+.image-sharp {
+  overflow: hidden;
+}
+
+.image-sharp img {
+  transition: transform 0.4s cubic-bezier(0.6, 0, 0.4, 1);
+}
+
+.image-sharp:hover img {
+  transform: scale(1.05);
+}
+
+/* ===== Utility Classes ===== */
+.tracking-tight {
+  letter-spacing: -0.02em;
+}
+
+.tracking-wide {
+  letter-spacing: 0.1em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.15em;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ===== Section Viewports ===== */
 .section-viewport {
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,23 +286,16 @@ body {
 
 .section-viewport--compact {
   min-height: 80vh;
-  min-height: 80dvh;
   padding: 4rem 0;
-}
-
-.section-viewport--tall {
-  min-height: 120vh;
-  min-height: 120dvh;
-  padding: 6rem 0;
 }
 
 /* ===== Animation Keyframes ===== */
 
-/* Fade In Up */
-@keyframes fadeInUp {
+/* Sharp Fade In */
+@keyframes sharpFadeIn {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -114,314 +303,89 @@ body {
   }
 }
 
-/* Subtle Float */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-8px) rotate(1deg);
-  }
-  75% {
-    transform: translateY(-8px) rotate(-1deg);
-  }
-}
-
-/* Glow Pulse */
-@keyframes glowPulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(249, 150, 61, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(249, 150, 61, 0.6), 0 0 60px rgba(255, 140, 66, 0.4);
-  }
-}
-
-/* Text Glow */
-@keyframes textGlow {
-  0%, 100% {
-    text-shadow: 0 0 10px rgba(249, 150, 61, 0.5);
-  }
-  50% {
-    text-shadow: 0 0 20px rgba(249, 150, 61, 0.8), 0 0 30px rgba(255, 140, 66, 0.6);
-  }
-}
-
-/* Drift (for particles) */
-@keyframes drift {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
+/* Slide In Left */
+@keyframes slideInLeft {
+  from {
     opacity: 0;
+    transform: translateX(-40px);
   }
-  10% {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide In Right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Line Draw */
+@keyframes lineDraw {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Pulse Minimal */
+@keyframes pulseMinimal {
+  0%, 100% {
     opacity: 1;
   }
-  90% {
-    opacity: 1;
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Scanline Move */
+@keyframes scanlineMove {
+  0% {
+    transform: translateY(-100%);
   }
   100% {
-    transform: translate(var(--drift-x, 100px), var(--drift-y, -200px)) rotate(360deg);
-    opacity: 0;
+    transform: translateY(100vh);
   }
 }
 
-/* Sparkle */
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(0) rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1) rotate(180deg);
-  }
+/* Utility Animations */
+.animate-sharp-fade {
+  animation: sharpFadeIn 0.5s cubic-bezier(0.6, 0, 0.4, 1) forwards;
 }
 
-/* Bounce Down */
-@keyframes bounceDown {
-  0%, 100% {
-    transform: translateY(0);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(12px);
-    opacity: 1;
-  }
+.animate-slide-left {
+  animation: slideInLeft 0.6s cubic-bezier(0.6, 0, 0.4, 1) forwards;
 }
 
-/* Gradient Shift */
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.animate-slide-right {
+  animation: slideInRight 0.6s cubic-bezier(0.6, 0, 0.4, 1) forwards;
 }
 
-/* Utility Classes */
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
+.animate-line-draw {
+  animation: lineDraw 0.8s cubic-bezier(0.6, 0, 0.4, 1) forwards;
 }
 
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+.animate-pulse-minimal {
+  animation: pulseMinimal 2s ease-in-out infinite;
 }
 
-.animate-glow {
-  animation: glowPulse 3s ease-in-out infinite;
-}
-
-.animate-text-glow {
-  animation: textGlow 2s ease-in-out infinite;
-}
-
-.animate-sparkle {
-  animation: sparkle 2s ease-in-out infinite;
-}
-
-.animate-bounce-down {
-  animation: bounceDown 2s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradientShift 8s ease infinite;
-}
-
-/* ===== Background Patterns ===== */
-
-/* Organic Grid */
-.bg-grid-pattern {
-  background-image:
-    linear-gradient(rgba(249, 150, 61, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(249, 150, 61, 0.08) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-
-/* Dot Pattern */
-.bg-dot-pattern {
-  background-image: radial-gradient(rgba(249, 150, 61, 0.3) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-/* Mesh Gradient */
-.bg-mesh-gradient {
-  background: radial-gradient(ellipse at 20% 20%, rgba(249, 150, 61, 0.15) 0%, transparent 50%),
-              radial-gradient(ellipse at 80% 80%, rgba(255, 140, 66, 0.15) 0%, transparent 50%),
-              radial-gradient(ellipse at 50% 50%, rgba(255, 179, 102, 0.1) 0%, transparent 70%);
-}
-
-/* ===== Organic Blob Shapes ===== */
-.blob-shape {
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-}
-
-.blob-shape-alt {
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-}
-
-/* ===== Divider Styles ===== */
-.divider-orange {
-  width: 60%;
-  max-width: 400px;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-orange-primary),
-    var(--color-orange-light),
-    var(--color-orange-primary),
-    transparent
-  );
-  margin: 2rem auto;
-}
-
-.divider-dots {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 2rem auto;
-}
-
-.divider-dots::before,
-.divider-dots::after {
-  content: "";
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-orange-primary));
-}
-
-.divider-dots span {
-  width: 6px;
-  height: 6px;
-  background: var(--color-orange-primary);
-  border-radius: 50%;
-}
-
-/* ===== Typography ===== */
-.tracking-ultra {
-  letter-spacing: 0.35em;
-}
-
-.tracking-wide {
-  letter-spacing: 0.1em;
-}
-
-.text-gradient-orange {
-  background: linear-gradient(135deg, var(--color-orange-light), var(--color-orange-primary), var(--color-orange-dark));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-glow-orange {
-  text-shadow: 0 0 20px rgba(249, 150, 61, 0.5),
-               0 0 40px rgba(249, 150, 61, 0.3);
-}
-
-/* ===== Button Base Styles ===== */
-.btn-magnetic {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.btn-magnetic:hover {
-  transform: scale(1.05);
-}
-
-/* ===== Card Hover Effects ===== */
-.card-lift {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.4s ease;
-}
-
-.card-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(249, 150, 61, 0.2);
-}
-
-/* ===== Image Hover Zoom ===== */
-.image-zoom {
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.image-zoom:hover {
-  transform: scale(1.08);
-}
-
-/* ===== Orange Glow Border ===== */
-.glow-border {
-  position: relative;
-}
-
-.glow-border::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(135deg, var(--color-orange-primary), var(--color-orange-light), var(--color-orange-primary));
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.glow-border:hover::before {
-  opacity: 1;
-}
-
-/* ===== Particle Container ===== */
-.particle-container {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--color-orange-primary);
-  border-radius: 50%;
-  animation: drift var(--duration, 10s) linear infinite;
-  animation-delay: var(--delay, 0s);
-}
-
-.particle--large {
-  width: 8px;
-  height: 8px;
-  box-shadow: 0 0 10px var(--color-orange-glow);
-}
-
-.particle--sparkle {
-  width: 6px;
-  height: 6px;
-  background: var(--color-gold);
-  box-shadow: 0 0 15px var(--color-gold);
-}
-
-/* ===== Parallax Layer ===== */
+/* ===== Parallax Performance ===== */
 .parallax-layer {
   will-change: transform;
   transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
-/* ===== GSAP Animation Classes ===== */
-.reveal-text {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-}
-
-.reveal-text span {
-  display: inline-block;
-  transform: translateY(100%);
-  opacity: 0;
-}
-
-/* ===== Lenis Smooth Scroll Styles ===== */
+/* ===== Lenis Smooth Scroll ===== */
 html.lenis {
   height: auto;
 }
@@ -451,8 +415,15 @@ html.lenis {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .parallax-layer {
     transform: none !important;
+  }
+}
+
+/* ===== Responsive Typography ===== */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
   }
 }

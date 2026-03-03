@@ -1,41 +1,23 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { createFloatingParticles } from "@/lib/animations";
-
 interface FloatingParticlesProps {
   count?: number;
   className?: string;
-  color?: string;
 }
 
 /**
- * Floating particles background effect
+ * Minimal dot grid pattern - urban aesthetic
+ * More subtle than floating particles
  */
 export default function FloatingParticles({
-  count = 20,
+  count = 0,
   className = "",
 }: FloatingParticlesProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Clear existing particles
-    container.innerHTML = "";
-
-    createFloatingParticles(container, count);
-
-    return () => {
-      container.innerHTML = "";
-    };
-  }, [count]);
-
+  // For minimalist design, we use CSS patterns instead of DOM particles
+  // This is more performant and fits the aesthetic better
   return (
     <div
-      ref={containerRef}
-      className={`particle-container ${className}`}
+      className={`absolute inset-0 bg-dot-minimal opacity-30 ${className}`}
       aria-hidden="true"
     />
   );

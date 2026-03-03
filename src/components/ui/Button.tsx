@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -16,17 +17,18 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-r from-orange-primary to-orange-dark text-white font-semibold shadow-xl shadow-orange-primary/25 hover:shadow-orange-primary/40",
+    "bg-aka text-shiro border-aka hover:bg-aka-dark hover:border-aka-dark",
   secondary:
-    "bg-white/90 text-charcoal font-medium shadow-lg hover:shadow-xl hover:bg-white",
-  ghost:
-    "bg-transparent text-white border border-orange-primary/30 hover:border-orange-primary hover:bg-orange-primary/10 hover:shadow-lg hover:shadow-orange-primary/10",
+    "bg-shiro text-sumi border-shiro hover:bg-ash-light hover:border-ash-light",
+  outline:
+    "bg-transparent text-shiro border-ash hover:border-aka hover:text-aka",
+  ghost: "bg-transparent text-ash hover:text-shiro border-transparent",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-6 py-2.5 text-sm",
-  md: "px-8 py-3.5 text-base",
-  lg: "px-10 py-4 text-lg",
+  sm: "px-5 py-2.5 text-xs",
+  md: "px-8 py-3.5 text-sm",
+  lg: "px-10 py-4 text-base",
 };
 
 export default function Button({
@@ -40,10 +42,9 @@ export default function Button({
 }: ButtonProps) {
   const baseClasses = `
     inline-flex items-center justify-center gap-2.5
-    rounded-2xl
-    transition-all duration-300 cubic-bezier(0.4, 0, 0.2, 1)
+    border font-medium uppercase tracking-wider
+    transition-all duration-200 cubic-bezier(0.6, 0, 0.4, 1)
     cursor-pointer
-    tracking-wide
     hover:-translate-y-0.5
     active:translate-y-0
     ${variantStyles[variant]}
@@ -51,19 +52,24 @@ export default function Button({
     ${className}
   `.trim();
 
+  const content = (
+    <>
+      {children}
+      {icon && <span className="ml-0.5">{icon}</span>}
+    </>
+  );
+
   if (href) {
     return (
-      <a href={href} className={baseClasses}>
-        {children}
-        {icon && <span className="ml-0.5">{icon}</span>}
-      </a>
+      <Link href={href} className={baseClasses} {...props}>
+        {content}
+      </Link>
     );
   }
 
   return (
     <button className={baseClasses} {...props}>
-      {children}
-      {icon && <span className="ml-0.5">{icon}</span>}
+      {content}
     </button>
   );
 }
