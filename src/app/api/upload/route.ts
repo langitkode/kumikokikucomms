@@ -52,8 +52,9 @@ export async function POST(request: Request) {
       },
     });
 
-    // Note: Cache revalidation is handled via time-based revalidation in /api/gallery
-    // Gallery will automatically fetch fresh data on next request
+    // On-demand revalidation: Clear gallery cache immediately
+    const { unstable_cacheTag } = await import('next/cache');
+    unstable_cacheTag('gallery');
 
     return NextResponse.json({
       success: true,
@@ -86,8 +87,9 @@ export async function DELETE(request: Request) {
     // Delete from Cloudinary
     await cloudinary.uploader.destroy(public_id);
 
-    // Note: Cache revalidation is handled via time-based revalidation in /api/gallery
-    // Gallery will automatically fetch fresh data on next request
+    // On-demand revalidation: Clear gallery cache immediately
+    const { unstable_cacheTag } = await import('next/cache');
+    unstable_cacheTag('gallery');
 
     return NextResponse.json({ success: true });
   } catch (error) {

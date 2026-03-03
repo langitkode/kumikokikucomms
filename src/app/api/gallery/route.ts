@@ -2,9 +2,8 @@ import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 import { checkRateLimit } from "@/lib/rateLimit";
 
-// Revalidate gallery every 5 minutes (300 seconds)
-// This reduces API calls by ~90% while keeping content reasonably fresh
-export const revalidate = 300;
+// ISR: Cache for 1 hour, revalidated on-demand when images are uploaded/deleted
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   try {
@@ -87,7 +86,7 @@ export async function GET(request: Request) {
       next_cursor: resourcesResponse.next_cursor || null,
     }, {
       headers: {
-        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
       },
     });
   } catch (error) {
