@@ -17,12 +17,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-r from-neon-orange to-neon-pink text-night-dark hover:shadow-lg hover:shadow-neon-orange/30",
+    "bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-nightdark)] hover:shadow-lg",
   secondary:
-    "bg-night-mid text-text-primary border border-neon-blue hover:border-neon-blue hover:shadow-lg hover:shadow-neon-blue/20",
+    "bg-[var(--color-nightmid)] text-[var(--color-text)] border border-[var(--color-neonblue)] hover:border-[var(--color-neonblue)]",
   outline:
-    "bg-transparent text-text-primary border border-neon-orange hover:bg-neon-orange hover:text-night-dark hover:shadow-lg hover:shadow-neon-orange/30",
-  ghost: "bg-transparent text-text-secondary border-transparent hover:text-text-primary hover:border-neon-pink/30 hover:border",
+    "bg-transparent text-[var(--color-text)] border border-[var(--color-neon)] hover:bg-[var(--color-neon)] hover:text-[var(--color-nightdark)]",
+  ghost: "bg-transparent text-[var(--color-textmuted)] border-transparent hover:text-[var(--color-text)] hover:border-[var(--color-neonpink)]/30 hover:border",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

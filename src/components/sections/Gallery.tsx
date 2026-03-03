@@ -12,10 +12,8 @@ export default function Gallery() {
   const gridRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Show only first 6 items for preview
   const previewItems = useMemo(() => portfolio.slice(0, 6), [portfolio]);
 
-  // Animate grid on mount
   useEffect(() => {
     const items = itemRefs.current.filter(Boolean) as HTMLElement[];
     if (items.length > 0) {
@@ -23,13 +21,12 @@ export default function Gallery() {
     }
   }, []);
 
-  // Handle image load
   const handleImageLoad = (index: number) => {
     setLoadedImages((prev) => new Set(prev).add(index));
   };
 
   return (
-    <section id="portfolio" className="relative py-24 px-6 bg-night-base">
+    <section id="portfolio" className="relative py-24 px-6 bg-[var(--color-night)]">
       {/* Background */}
       <div className="absolute inset-0 bg-grid-fine opacity-10" />
       <div className="absolute inset-0 bg-lantern-glow opacity-20" />
@@ -37,13 +34,13 @@ export default function Gallery() {
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <p className="text-neon-blue text-xs uppercase tracking-widest mb-2">
+          <p className="text-[var(--color-neonblue)] text-xs uppercase tracking-widest mb-2">
             ギャラリー
           </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-text-primary tracking-tight mb-4">
+          <h2 className="text-4xl md:text-6xl font-bold text-[var(--color-text)] tracking-tight mb-4">
             GALLERY
           </h2>
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-neon-blue to-transparent mx-auto" />
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-[var(--color-neonblue)] to-transparent mx-auto" />
         </div>
 
         {/* Preview Grid */}
@@ -54,9 +51,8 @@ export default function Gallery() {
               ref={(el) => {
                 itemRefs.current[index] = el;
               }}
-              className="group relative aspect-square bg-night-mid border border-night-light overflow-hidden"
+              className="group relative aspect-square bg-[var(--color-nightmid)] border border-[var(--color-nightlight)] overflow-hidden"
             >
-              {/* Image */}
               <Image
                 src={item.src}
                 alt={item.alt}
@@ -69,21 +65,20 @@ export default function Gallery() {
                 onLoad={() => handleImageLoad(index)}
               />
 
-              {/* Loading Placeholder */}
               {!loadedImages.has(index) && (
-                <div className="absolute inset-0 bg-night-mid animate-pulse" />
+                <div className="absolute inset-0 bg-[var(--color-nightmid)] animate-pulse" />
               )}
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-night-base/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
-                <p className="text-text-primary font-medium text-sm">{item.label}</p>
-                <p className="text-neon-blue text-xs uppercase tracking-wider">
+              <div className="absolute inset-0 bg-[var(--color-night)]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2">
+                <p className="text-[var(--color-text)] font-medium text-sm">{item.label}</p>
+                <p className="text-[var(--color-neonblue)] text-xs uppercase tracking-wider">
                   {item.category}
                 </p>
               </div>
 
               {/* Corner Accent */}
-              <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-neon-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-[var(--color-neonblue)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           ))}
         </div>
@@ -92,7 +87,7 @@ export default function Gallery() {
         <div className="text-center">
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-3 px-8 py-4 border border-neon-blue text-neon-blue hover:bg-neon-blue/10 hover:text-text-primary transition-all duration-200 uppercase tracking-wider text-sm"
+            className="inline-flex items-center gap-3 px-8 py-4 border border-[var(--color-neonblue)] text-[var(--color-neonblue)] hover:bg-[var(--color-neonblue)]/10 hover:text-[var(--color-text)] transition-all duration-200 uppercase tracking-wider text-sm"
           >
             <span>View Full Gallery</span>
             <svg

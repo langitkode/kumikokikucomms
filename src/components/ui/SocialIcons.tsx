@@ -108,13 +108,12 @@ export default function SocialIcons({
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative p-3 border border-night-light hover:border-neon-pink transition-all duration-200"
+          className="group relative p-3 border border-[var(--color-nightlight)] hover:border-[var(--color-neonpink)] transition-all duration-200"
           style={{ color: iconColor }}
           aria-label={link.platform}
         >
           <SocialIcon icon={link.icon} size={sizeMap[size]} />
-          {/* Neon glow on hover */}
-          <div className="absolute inset-0 border border-neon-pink opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+          <div className="absolute inset-0 border border-[var(--color-neonpink)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
         </a>
       ))}
     </div>

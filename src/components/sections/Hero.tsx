@@ -50,20 +50,20 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden bg-night-base">
+    <section id="home" className="relative h-screen w-full overflow-hidden bg-[var(--color-night)]">
       {/* Night Gradient Background */}
       <div className="absolute inset-0 bg-night-gradient" />
 
       {/* Japanese Aesthetic Grid Overlay */}
       <div className="absolute inset-0 bg-grid-japanese opacity-20" />
 
-      {/* Lantern Glow Effects (corner ambient lighting) */}
+      {/* Lantern Glow Effects */}
       <div className="absolute inset-0 bg-lantern-glow opacity-50" />
 
-      {/* Vertical Light Beams (like street light rays) */}
+      {/* Vertical Light Beams */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-neon-orange/10 to-transparent" />
-        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-neon-pink/10 to-transparent" />
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-neon)]/10 to-transparent" />
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-neonpink)]/10 to-transparent" />
       </div>
 
       {/* Content */}
@@ -72,24 +72,24 @@ export default function Hero() {
           {/* Japanese Decorative Element */}
           <div className="mb-8">
             <div className="inline-flex items-center gap-4">
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-neon-orange to-transparent" />
-              <p className="text-neon-orange text-xs uppercase tracking-[0.5em]">
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-[var(--color-neon)] to-transparent" />
+              <p className="text-[var(--color-neon)] text-xs uppercase tracking-[0.5em]">
                 クミコキク
               </p>
-              <div className="w-16 h-px bg-gradient-to-l from-transparent via-neon-orange to-transparent" />
+              <div className="w-16 h-px bg-gradient-to-l from-transparent via-[var(--color-neon)] to-transparent" />
             </div>
           </div>
 
           {/* Main Title */}
           <h1
             ref={titleRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-text-primary mb-6 tracking-tighter"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-[var(--color-text)] mb-6 tracking-tighter"
           >
             {hero.title.split(" ").map((word, i) => (
               <span key={i} className="relative inline-block">
                 {word}
                 {i < hero.title.split(" ").length - 1 && (
-                  <span className="text-neon-orange text-glow-orange">.</span>
+                  <span className="text-[var(--color-neon)] text-glow-orange">.</span>
                 )}
               </span>
             ))}
@@ -98,7 +98,7 @@ export default function Hero() {
           {/* Subtitle */}
           <p
             ref={subtitleRef}
-            className="text-xl md:text-3xl text-neon-orange font-medium uppercase tracking-widest mb-4 text-glow-orange"
+            className="text-xl md:text-3xl text-[var(--color-neon)] font-medium uppercase tracking-widest mb-4 text-glow-orange"
           >
             {hero.subtitle}
           </p>
@@ -106,7 +106,7 @@ export default function Hero() {
           {/* Tagline */}
           <p
             ref={taglineRef}
-            className="text-sm md:text-base text-text-secondary uppercase tracking-wider max-w-xl mx-auto"
+            className="text-sm md:text-base text-[var(--color-textmuted)] uppercase tracking-wider max-w-xl mx-auto"
           >
             {hero.tagline}
           </p>
@@ -115,17 +115,17 @@ export default function Hero() {
           <div className="flex items-center justify-center gap-4 mt-12">
             <a
               href="#services"
-              className="group relative px-10 py-4 bg-gradient-to-r from-neon-orange to-neon-pink text-night-dark text-sm uppercase tracking-wider font-medium overflow-hidden shadow-lg"
+              className="group relative px-10 py-4 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-nightdark)] text-sm uppercase tracking-wider font-medium overflow-hidden shadow-lg"
             >
               <span className="relative z-10">View Services</span>
-              <div className="absolute inset-0 bg-text-primary transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <span className="absolute inset-0 z-10 flex items-center justify-center text-night-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute inset-0 bg-[var(--color-text)] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <span className="absolute inset-0 z-10 flex items-center justify-center text-[var(--color-nightdark)] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 View Services
               </span>
             </a>
             <a
               href="/gallery"
-              className="px-10 py-4 border border-neon-orange/50 text-text-primary text-sm uppercase tracking-wider font-medium hover:bg-neon-orange/10 hover:border-neon-orange hover:text-glow-orange transition-all duration-200"
+              className="px-10 py-4 border border-[var(--color-neon)]/50 text-[var(--color-text)] text-sm uppercase tracking-wider font-medium hover:bg-[var(--color-neon)]/10 hover:border-[var(--color-neon)] hover:text-glow-orange transition-all duration-200"
             >
               Portfolio
             </a>
@@ -134,18 +134,18 @@ export default function Hero() {
 
         {/* Minimal Scroll Indicator */}
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
-          <p className="text-text-muted text-[10px] uppercase tracking-widest">
+          <p className="text-[var(--color-textdim)] text-[10px] uppercase tracking-widest">
             Scroll
           </p>
-          <div className="w-px h-16 bg-gradient-to-b from-neon-orange via-neon-orange/50 to-transparent animate-pulse" />
+          <div className="w-px h-16 bg-gradient-to-b from-[var(--color-neon)] via-[var(--color-neon)]/50 to-transparent animate-pulse" />
         </div>
       </div>
 
-      {/* Minimal Corner Accents (neon lines) */}
-      <div className="absolute top-8 left-8 w-20 h-20 border-l border-t border-neon-orange/40" />
-      <div className="absolute top-8 right-8 w-20 h-20 border-r border-t border-neon-pink/40" />
-      <div className="absolute bottom-32 left-8 w-20 h-20 border-l border-b border-neon-pink/40" />
-      <div className="absolute bottom-32 right-8 w-20 h-20 border-r border-b border-neon-orange/40" />
+      {/* Minimal Corner Accents */}
+      <div className="absolute top-8 left-8 w-20 h-20 border-l border-t border-[var(--color-neon)]/40" />
+      <div className="absolute top-8 right-8 w-20 h-20 border-r border-t border-[var(--color-neonpink)]/40" />
+      <div className="absolute bottom-32 left-8 w-20 h-20 border-l border-b border-[var(--color-neonpink)]/40" />
+      <div className="absolute bottom-32 right-8 w-20 h-20 border-r border-b border-[var(--color-neon)]/40" />
     </section>
   );
 }

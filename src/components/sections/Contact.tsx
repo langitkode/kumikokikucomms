@@ -7,23 +7,23 @@ export default function Contact() {
   const { socialLinks, hero } = siteConfig;
 
   return (
-    <section id="request" className="relative py-24 px-6 bg-night-mid">
+    <section id="request" className="relative py-24 px-6 bg-[var(--color-nightmid)]">
       {/* Background */}
       <div className="absolute inset-0 bg-dot-japanese opacity-20" />
       <div className="absolute inset-0 bg-lantern-glow opacity-20" />
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
         {/* Section Header */}
-        <p className="text-neon-pink text-xs uppercase tracking-widest mb-2">
+        <p className="text-[var(--color-neonpink)] text-xs uppercase tracking-widest mb-2">
           お問い合わせ
         </p>
-        <h2 className="text-4xl md:text-5xl font-bold text-text-primary tracking-tight mb-6">
+        <h2 className="text-4xl md:text-5xl font-bold text-[var(--color-text)] tracking-tight mb-6">
           COMMISSION REQUEST
         </h2>
-        <div className="w-16 h-px bg-gradient-to-r from-transparent via-neon-pink to-transparent mx-auto mb-8" />
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-[var(--color-neonpink)] to-transparent mx-auto mb-8" />
 
         {/* Description */}
-        <p className="text-text-secondary text-sm leading-relaxed mb-10">
+        <p className="text-[var(--color-textmuted)] text-sm leading-relaxed mb-10">
           For commission inquiries, please reach out through any of the platforms
           below. I typically respond within 24-48 hours ♡
         </p>
@@ -36,7 +36,7 @@ export default function Contact() {
         {/* Email CTA */}
         <a
           href="mailto:example@gmail.com"
-          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-neon-orange to-neon-pink text-night-dark hover:shadow-lg hover:shadow-neon-orange/30 transition-all duration-200 uppercase tracking-wider text-sm font-medium"
+          className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-nightdark)] hover:shadow-lg transition-all duration-200 uppercase tracking-wider text-sm font-medium"
         >
           <svg
             width="18"
@@ -53,8 +53,8 @@ export default function Contact() {
         </a>
 
         {/* Footer */}
-        <div className="mt-20 pt-8 border-t border-night-light">
-          <p className="text-text-muted text-xs uppercase tracking-wider">
+        <div className="mt-20 pt-8 border-t border-[var(--color-nightlight)]">
+          <p className="text-[var(--color-textdim)] text-xs uppercase tracking-wider">
             {hero.copyright}
           </p>
         </div>

@@ -44,7 +44,7 @@ export default function Nav() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-night-base/95 backdrop-blur-sm border-b border-neon-orange/20 py-3"
+            ? "bg-[var(--color-night)]/95 backdrop-blur-sm border-b border-[var(--color-neon)]/20 py-3"
             : "bg-transparent py-5"
         }`}
       >
@@ -53,10 +53,10 @@ export default function Nav() {
             {/* Logo */}
             <a
               href="/"
-              className="text-lg font-bold text-text-primary tracking-tighter group"
+              className="text-lg font-bold text-[var(--color-text)] tracking-tighter group"
             >
               KK
-              <span className="text-neon-orange">.</span>
+              <span className="text-[var(--color-neon)]">.</span>
             </a>
 
             {/* Desktop Nav */}
@@ -71,11 +71,10 @@ export default function Nav() {
                       handleNavClick(item.href);
                     }
                   }}
-                  className="relative px-4 py-2 text-xs text-text-secondary uppercase tracking-wider hover:text-text-primary transition-colors group"
+                  className="relative px-4 py-2 text-xs text-[var(--color-textmuted)] uppercase tracking-wider hover:text-[var(--color-text)] transition-colors group"
                 >
                   {item.label}
-                  {/* Hover underline */}
-                  <span className="absolute bottom-0 left-0 w-0 h-px bg-neon-orange group-hover:w-full transition-all duration-300" />
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-[var(--color-neon)] group-hover:w-full transition-all duration-300" />
                 </a>
               ))}
             </div>
@@ -84,7 +83,7 @@ export default function Nav() {
             <div className="hidden md:block">
               <a
                 href="#request"
-                className="px-5 py-2.5 bg-gradient-to-r from-neon-orange to-neon-pink text-night-dark text-xs uppercase tracking-wider font-medium hover:shadow-lg hover:shadow-neon-orange/30 transition-all duration-200"
+                className="px-5 py-2.5 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-nightdark)] text-xs uppercase tracking-wider font-medium hover:shadow-lg transition-all duration-200"
               >
                 Commission
               </a>
@@ -93,7 +92,7 @@ export default function Nav() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden p-2 text-text-primary"
+              className="md:hidden p-2 text-[var(--color-text)]"
               aria-label="Toggle menu"
             >
               <svg
@@ -125,7 +124,7 @@ export default function Nav() {
 
       {/* Mobile Menu Overlay */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-40 bg-night-base/95 backdrop-blur-sm md:hidden">
+        <div className="fixed inset-0 z-40 bg-[var(--color-night)]/95 backdrop-blur-sm md:hidden">
           <div className="flex flex-col items-center justify-center h-full px-6">
             <div className="space-y-6 text-center">
               {navItems.map((item, i) => (
@@ -138,7 +137,7 @@ export default function Nav() {
                       handleNavClick(item.href);
                     }
                   }}
-                  className="block text-2xl text-text-secondary uppercase tracking-widest hover:text-neon-orange transition-colors duration-200"
+                  className="block text-2xl text-[var(--color-textmuted)] uppercase tracking-widest hover:text-[var(--color-neon)] transition-colors duration-200"
                   style={{ animationDelay: `${i * 0.05}s` }}
                 >
                   {item.label}
@@ -149,7 +148,7 @@ export default function Nav() {
             {/* Close Button */}
             <button
               onClick={() => setIsMobileOpen(false)}
-              className="absolute top-6 right-6 p-2 text-text-secondary hover:text-text-primary transition-colors"
+              className="absolute top-6 right-6 p-2 text-[var(--color-textmuted)] hover:text-[var(--color-text)] transition-colors"
               aria-label="Close menu"
             >
               <svg

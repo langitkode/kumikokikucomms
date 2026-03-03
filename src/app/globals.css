@@ -3,39 +3,36 @@
 
 /* ===== Japanese Night Aesthetic Theme ===== */
 @theme inline {
-  /* Deep Night Blues (from reference image) */
-  --color-night-base: #0a0e1a;
-  --color-night-dark: #05070f;
-  --color-night-mid: #0f1525;
-  --color-night-light: #1a2240;
-  --color-night-purple: #1e1a35;
-  --color-night-blue: #152035;
+  /* Deep Night Blues */
+  --color-night: #0a0e1a;
+  --color-nightdark: #05070f;
+  --color-nightmid: #0f1525;
+  --color-nightlight: #1a2240;
+  --color-nightpurple: #1e1a35;
+  --color-nightblue: #152035;
 
-  /* Neon Accents (Japanese street lights) */
-  --color-neon-orange: #ff6b4a;
-  --color-neon-pink: #ff4d7a;
-  --color-neon-blue: #4a9eff;
-  --color-neon-purple: #9d6aff;
-  --color-neon-yellow: #ffcc4a;
-  --color-neon-red: #ff4a4a;
+  /* Neon Accents */
+  --color-neon: #ff6b4a;
+  --color-neonpink: #ff4d7a;
+  --color-neonblue: #4a9eff;
+  --color-neonpurple: #9d6aff;
+  --color-neonyellow: #ffcc4a;
+  --color-neonred: #ff4a4a;
 
-  /* Warm Light (lantern glow) */
-  --color-lantern-warm: #ffaa6a;
-  --color-lantern-soft: #ffcc8a;
-  --color-lantern-dim: #ff8855;
+  /* Warm Light */
+  --color-lantern: #ffaa6a;
+  --color-lanternsoft: #ffcc8a;
+  --color-lanterndim: #ff8855;
 
   /* Text Colors */
-  --color-text-primary: #f0f4ff;
-  --color-text-secondary: #a8b4d6;
-  --color-text-muted: #6a7a9a;
+  --color-text: #f0f4ff;
+  --color-textmuted: #a8b4d6;
+  --color-textdim: #6a7a9a;
 
   /* Typography */
   --font-heading: "Noto Sans JP", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
   --font-body: system-ui, -apple-system, sans-serif;
-
-  /* Spacing */
-  --spacing-unit: 8px;
 }
 
 /* ===== Base Reset ===== */
@@ -55,8 +52,8 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--color-night-base);
-  color: var(--color-text-primary);
+  background: var(--color-night);
+  color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -64,8 +61,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-neon-pink);
-  color: var(--color-night-dark);
+  background: var(--color-neonpink);
+  color: var(--color-nightdark);
 }
 
 /* ===== Typography ===== */
@@ -77,14 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-gradient-neon {
-  background: linear-gradient(135deg, var(--color-neon-orange), var(--color-neon-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-cool {
-  background: linear-gradient(135deg, var(--color-neon-blue), var(--color-neon-purple));
+  background: linear-gradient(135deg, var(--color-neon), var(--color-neonpink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -101,28 +91,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ===== Borders & Dividers ===== */
-.border-neon {
-  border: 1px solid var(--color-neon-orange);
-}
-
-.border-neon-pink {
-  border: 1px solid var(--color-neon-pink);
-}
-
-.border-subtle {
-  border: 1px solid rgba(168, 180, 214, 0.2);
-}
-
 .divider-neon {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-neon-orange), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-neon), transparent);
 }
 
 .divider-pink {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-neon-pink), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-neonpink), transparent);
 }
 
 /* ===== Japanese Grid Patterns ===== */
@@ -145,27 +123,6 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 24px 24px;
 }
 
-/* ===== Neon Glow Effects ===== */
-.neon-glow-orange {
-  box-shadow:
-    0 0 10px rgba(255, 107, 74, 0.5),
-    0 0 20px rgba(255, 107, 74, 0.3),
-    0 0 40px rgba(255, 107, 74, 0.2);
-}
-
-.neon-glow-pink {
-  box-shadow:
-    0 0 10px rgba(255, 77, 122, 0.5),
-    0 0 20px rgba(255, 77, 122, 0.3),
-    0 0 40px rgba(255, 77, 122, 0.2);
-}
-
-.neon-border-orange {
-  box-shadow:
-    inset 0 0 10px rgba(255, 107, 74, 0.3),
-    0 0 10px rgba(255, 107, 74, 0.5);
-}
-
 /* ===== Lantern Glow Background ===== */
 .bg-lantern-glow {
   background:
@@ -177,250 +134,25 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== Night Gradient Backgrounds ===== */
 .bg-night-gradient {
   background: linear-gradient(180deg,
-    var(--color-night-dark) 0%,
-    var(--color-night-base) 30%,
-    var(--color-night-mid) 70%,
-    var(--color-night-purple) 100%
+    var(--color-nightdark) 0%,
+    var(--color-night) 30%,
+    var(--color-nightmid) 70%,
+    var(--color-nightpurple) 100%
   );
-}
-
-.bg-night-vertical {
-  background: linear-gradient(180deg,
-    var(--color-night-base) 0%,
-    var(--color-night-mid) 50%,
-    var(--color-night-dark) 100%
-  );
-}
-
-/* ===== Solid Panels (Night Theme) ===== */
-.panel-night {
-  background: var(--color-night-mid);
-  border: 1px solid rgba(168, 180, 214, 0.15);
-}
-
-.panel-glow {
-  background: var(--color-night-mid);
-  border: 1px solid var(--color-neon-orange);
-  box-shadow:
-    inset 0 0 30px rgba(255, 107, 74, 0.05),
-    0 0 20px rgba(255, 107, 74, 0.1);
-}
-
-/* ===== Sharp Buttons (Neon Style) ===== */
-.btn-neon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  font-family: var(--font-heading);
-  font-weight: 500;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.6, 0, 0.4, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-neon:hover {
-  transform: translateY(-2px);
-}
-
-.btn-neon-primary {
-  background: linear-gradient(135deg, var(--color-neon-orange), var(--color-neon-pink));
-  color: var(--color-night-dark);
-  border: none;
-}
-
-.btn-neon-primary:hover {
-  box-shadow:
-    0 0 20px rgba(255, 107, 74, 0.6),
-    0 0 40px rgba(255, 107, 74, 0.4);
-}
-
-.btn-neon-outline {
-  background: transparent;
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-neon-orange);
-}
-
-.btn-neon-outline:hover {
-  background: var(--color-neon-orange);
-  color: var(--color-night-dark);
-  box-shadow: 0 0 30px rgba(255, 107, 74, 0.5);
-}
-
-.btn-neon-ghost {
-  background: transparent;
-  color: var(--color-text-secondary);
-  border: 1px solid rgba(168, 180, 214, 0.3);
-}
-
-.btn-neon-ghost:hover {
-  border-color: var(--color-neon-pink);
-  color: var(--color-text-primary);
-}
-
-/* ===== Sharp Cards (Night Theme) ===== */
-.card-night {
-  background: var(--color-night-mid);
-  border: 1px solid rgba(168, 180, 214, 0.15);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card-night:hover {
-  border-color: var(--color-neon-orange);
-  box-shadow:
-    inset 0 0 30px rgba(255, 107, 74, 0.05),
-    0 0 20px rgba(255, 107, 74, 0.15);
-}
-
-.card-glow {
-  background: var(--color-night-mid);
-  border: 1px solid var(--color-neon-pink);
-  box-shadow:
-    inset 0 0 20px rgba(255, 77, 122, 0.05),
-    0 0 15px rgba(255, 77, 122, 0.2);
-}
-
-/* ===== Image Hover Effects ===== */
-.image-neon {
-  overflow: hidden;
-}
-
-.image-neon img {
-  transition: transform 0.4s cubic-bezier(0.6, 0, 0.4, 1);
-}
-
-.image-neon:hover img {
-  transform: scale(1.05);
 }
 
 /* ===== Utility Classes ===== */
-.tracking-tight {
-  letter-spacing: -0.02em;
-}
-
-.tracking-wide {
-  letter-spacing: 0.1em;
-}
-
-.tracking-wider {
-  letter-spacing: 0.15em;
-}
-
-.tracking-widest {
-  letter-spacing: 0.25em;
-}
-
-.uppercase {
-  text-transform: uppercase;
-}
-
-.font-mono {
-  font-family: var(--font-mono);
-}
-
-/* ===== Section Viewports ===== */
-.section-viewport {
-  min-height: 100vh;
-  min-height: 100dvh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.section-viewport--compact {
-  min-height: 80vh;
-  padding: 4rem 0;
-}
+.tracking-tight { letter-spacing: -0.02em; }
+.tracking-wide { letter-spacing: 0.1em; }
+.tracking-wider { letter-spacing: 0.15em; }
+.tracking-widest { letter-spacing: 0.25em; }
+.uppercase { text-transform: uppercase; }
+.font-mono { font-family: var(--font-mono); }
 
 /* ===== Animation Keyframes ===== */
-
-/* Neon Pulse */
-@keyframes neonPulse {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 20px rgba(255, 107, 74, 0.5);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 0 0 30px rgba(255, 107, 74, 0.8);
-  }
-}
-
-/* Lantern Flicker */
-@keyframes lanternFlicker {
-  0%, 100% {
-    opacity: 0.9;
-  }
-  25% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.85;
-  }
-  75% {
-    opacity: 0.95;
-  }
-}
-
-/* Gradient Flow */
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Float Up */
-@keyframes floatUp {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* Sharp Fade In */
 @keyframes sharpFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Utility Animations */
-.animate-neon-pulse {
-  animation: neonPulse 3s ease-in-out infinite;
-}
-
-.animate-lantern {
-  animation: lanternFlicker 4s ease-in-out infinite;
-}
-
-.animate-gradient-flow {
-  background-size: 200% 200%;
-  animation: gradientFlow 8s ease infinite;
-}
-
-.animate-float {
-  animation: floatUp 6s ease-in-out infinite;
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-sharp-fade {
@@ -435,44 +167,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ===== Lenis Smooth Scroll ===== */
-html.lenis {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
 
 /* ===== Reduced Motion ===== */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-
-  .parallax-layer {
-    transform: none !important;
-  }
+  .parallax-layer { transform: none !important; }
 }
 
-/* ===== Responsive Typography ===== */
 @media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
+  html { font-size: 14px; }
 }
