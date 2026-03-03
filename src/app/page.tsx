@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
 import Pricing from "@/components/sections/Pricing";
 import Gallery from "@/components/sections/Gallery";
@@ -10,6 +11,7 @@ export default function Home() {
     <>
       <Nav />
       <Hero />
+      <About />
       <Services />
       <Pricing />
       <Gallery />
