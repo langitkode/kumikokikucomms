@@ -31,8 +31,9 @@ export default function ServiceModal({
         const res = await fetch("/api/gallery");
         if (res.ok) {
           const data = await res.json();
-          if (data.length > 0) {
-            setPortfolioItems(data);
+          const fetchedItems = data.resources || [];
+          if (fetchedItems.length > 0) {
+            setPortfolioItems(fetchedItems);
           } else {
             setPortfolioItems(siteConfig.portfolio);
           }
@@ -63,12 +64,14 @@ export default function ServiceModal({
         "-=0.3",
       );
 
-      tl.fromTo(
-        contentRef.current?.children || [],
-        { x: 20, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" },
-        "-=0.4",
-      );
+      if (contentRef.current?.children) {
+        tl.fromTo(
+          Array.from(contentRef.current.children),
+          { x: 20, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" },
+          "-=0.4",
+        );
+      }
     } else {
       document.body.style.overflow = "";
       gsap.to(overlayRef.current, { opacity: 0, duration: 0.3 });
@@ -97,7 +100,7 @@ export default function ServiceModal({
       {/* Side Drawer Container */}
       <div
         ref={modalRef}
-        className="relative w-full max-w-xl h-[100dvh] bg-[var(--color-studio-dark)] border-l border-hairline border-[var(--color-textdim)]/20 shadow-[-20px_0_40px_rgba(0,0,0,0.5)] flex flex-col"
+        className="relative w-full max-w-xl h-[100dvh] bg-[var(--color-studio-dark)] border-l border-hairline border-[var(--color-textdim)]/20 shadow-[-20px_0_40px_rgba(0,0,0,0.5)] flex flex-col pointer-events-auto"
       >
         <div className="noise-overlay opacity-5 pointer-events-none" />
 
@@ -113,8 +116,9 @@ export default function ServiceModal({
             {/* Close Button Top Right */}
             <button
               onClick={onClose}
-              className="absolute top-8 right-8 text-[var(--color-textmuted)] hover:text-white transition-colors"
+              className="absolute top-4 right-4 lg:top-8 lg:right-8 p-2 text-[var(--color-textmuted)] hover:text-white transition-colors z-50"
               aria-label="Close"
+              style={{ touchAction: "manipulation" }}
             >
               <svg
                 width="24"

@@ -11,6 +11,10 @@ import Image from "next/image";
 import { siteConfig } from "@/lib/config";
 import { animateGalleryReveal } from "@/lib/animations";
 import { useSearchParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
+
+// Gallery page is dynamic due to category filtering and pagination
+export const dynamic = 'force-dynamic';
 
 interface GalleryImage {
   src: string;
@@ -20,7 +24,7 @@ interface GalleryImage {
 }
 
 function GalleryContent() {
-  const { galleryCategories, portfolio } = siteConfig;
+  const { galleryCategories } = siteConfig;
   const searchParams = useSearchParams();
   const urlCategory = searchParams.get("category");
 
@@ -48,8 +52,12 @@ function GalleryContent() {
         url.searchParams.set("category", category);
         url.searchParams.set("limit", "20");
         if (cursor) url.searchParams.set("next_cursor", cursor);
+        
+        // Add timestamp to bypass browser cache
+        url.searchParams.set("_t", Date.now().toString());
 
         const res = await fetch(url.toString(), { cache: "no-store" });
+        
         if (res.ok) {
           const data = await res.json();
           const newItems = data.resources || [];
@@ -57,19 +65,19 @@ function GalleryContent() {
           if (cursor) {
             setPortfolioItems((prev) => [...prev, ...newItems]);
           } else {
-            setPortfolioItems(newItems.length > 0 ? newItems : portfolio);
+            setPortfolioItems(newItems);
           }
           setNextCursor(data.next_cursor);
         }
       } catch (e) {
         console.error("Gallery fetch failed:", e);
-        if (!cursor) setPortfolioItems(portfolio);
+        setPortfolioItems([]);
       } finally {
         setIsLoading(false);
         setIsMoreLoading(false);
       }
     },
-    [portfolio]
+    []
   );
 
   useEffect(() => {
@@ -132,7 +140,7 @@ function GalleryContent() {
   }, [selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-[var(--color-night)]">
+    <div className="min-h-screen bg-[var(--color-night)] flex flex-col">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-[var(--color-night)]/95 backdrop-blur-sm border-b border-[var(--color-nightlight)]">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -177,22 +185,17 @@ function GalleryContent() {
         </div>
       </nav>
 
-      {/* Gallery Grid */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      {/* Main Content */}
+      <main className="w-full max-w-7xl mx-auto px-6 py-12">
         {isLoading ? (
-          <div className="grid grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="aspect-video bg-[var(--color-nightmid)] animate-pulse"
-              />
-            ))}
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 text-[var(--color-neon)] animate-spin" />
           </div>
         ) : (
           <>
             <div
               ref={gridRef}
-              className="grid grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4"
+              className="grid grid-cols-3 lg:grid-cols-5 gap-2 md:gap-4 w-full max-w-5xl mx-auto"
             >
               {portfolioItems.map((image, index) => (
                 <div
@@ -201,7 +204,7 @@ function GalleryContent() {
                     itemRefs.current[index] = el;
                   }}
                   onClick={() => handleImageClick(index)}
-                  className="group relative aspect-video bg-[var(--color-nightmid)] border border-[var(--color-nightlight)] cursor-pointer overflow-hidden rounded-sm"
+                  className="group relative w-full aspect-video bg-[var(--color-nightmid)] border border-[var(--color-nightlight)] cursor-pointer overflow-hidden rounded-sm"
                 >
                   <Image
                     src={image.src}
@@ -235,7 +238,7 @@ function GalleryContent() {
               ))}
             </div>
 
-            {portfolioItems.length === 0 && (
+            {portfolioItems.length === 0 && !isLoading && (
               <div className="text-center py-20">
                 <p className="text-[var(--color-textdim)] text-sm uppercase tracking-wider">
                   No images in this category
@@ -414,7 +417,7 @@ function GalleryContent() {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-nightlight)] mt-20">
+      <footer className="border-t border-[var(--color-nightlight)]">
         <div className="max-w-7xl mx-auto px-6 py-8 text-center">
           <p className="text-[var(--color-textdim)] text-xs uppercase tracking-wider">
             {siteConfig.hero.copyright}

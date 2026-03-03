@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import LenisClient from "@/components/LenisClient";
 
 export const metadata: Metadata = {
   title: "Kumiko Kiku Commission — VTuber Artist & Illustrator",
@@ -50,14 +51,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <LenisWrapper>{children}</LenisWrapper>
+        <LenisClient>{children}</LenisClient>
       </body>
     </html>
   );
-}
-
-// Lazy-load Lenis wrapper to avoid SSR issues
-async function LenisWrapper({ children }: { children: React.ReactNode }) {
-  const LenisClient = (await import("@/components/LenisClient")).default;
-  return <LenisClient>{children}</LenisClient>;
 }

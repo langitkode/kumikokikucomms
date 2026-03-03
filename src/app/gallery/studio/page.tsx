@@ -15,6 +15,7 @@ import { siteConfig } from "@/lib/config";
 import Link from "next/link";
 import UploadModal from "@/components/studio/UploadModal";
 import confetti from "canvas-confetti";
+import { useRouter } from "next/navigation";
 
 export default function GalleryStudio() {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -24,26 +25,48 @@ export default function GalleryStudio() {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("all");
+  const [authError, setAuthError] = useState("");
+  const router = useRouter();
 
-  // Check local storage for existing auth
+  // Check existing auth session on mount
   useEffect(() => {
-    const savedSecret = localStorage.getItem("studio_secret");
-    if (savedSecret) {
-      setSecret(savedSecret);
-      verifySecret(savedSecret);
-    } else {
-      setIsLoading(false);
-    }
+    checkAuthStatus();
   }, []);
 
-  const verifySecret = async (val: string) => {
-    // The actual security is enforced at the API level via process.env.ADMIN_SECRET
-    // This client check is just to hide/show the UI
-    if (val && val.length > 3) {
-      setIsAuthorized(true);
-      fetchGallery();
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch("/api/studio/verify");
+      if (response.ok) {
+        setIsAuthorized(true);
+        fetchGallery();
+      }
+    } catch (error) {
+      console.error("Auth check failed:", error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
+  };
+
+  const verifySecret = async (val: string) => {
+    setAuthError("");
+    try {
+      const response = await fetch("/api/studio/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ secret: val }),
+      });
+
+      if (response.ok) {
+        setIsAuthorized(true);
+        fetchGallery();
+      } else {
+        const data = await response.json();
+        setAuthError(data.error || "Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Verification failed:", error);
+      setAuthError("Verification failed");
+    }
   };
 
   const fetchGallery = async () => {
@@ -52,7 +75,7 @@ export default function GalleryStudio() {
       const response = await fetch("/api/gallery", { cache: "no-store" });
       if (response.ok) {
         const data = await response.json();
-        setItems(data);
+        setItems(data.resources || []);
       }
     } catch (error) {
       console.error("Failed to fetch gallery:", error);
@@ -61,17 +84,23 @@ export default function GalleryStudio() {
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("studio_secret", secret);
-    setIsAuthorized(true);
-    fetchGallery();
+    await verifySecret(secret);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("studio_secret");
-    setIsAuthorized(false);
-    setItems([]);
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/studio/logout", { method: "POST" });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setIsAuthorized(false);
+      setItems([]);
+      setSecret("");
+      setAuthError("");
+      router.refresh();
+    }
   };
 
   const handleDelete = async (publicId: string) => {
@@ -79,16 +108,18 @@ export default function GalleryStudio() {
 
     setIsDeleting(publicId);
     try {
-      // We'll need a delete API as well, but for now we'll just implement the UI
-      // Let's assume the API exists for completeness
       const response = await fetch("/api/upload", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ public_id: publicId, adminSecret: secret }),
+        body: JSON.stringify({ public_id: publicId }),
       });
 
       if (response.ok) {
         setItems(items.filter((item) => item.public_id !== publicId));
+      } else if (response.status === 401) {
+        // Session expired, redirect to login
+        setIsAuthorized(false);
+        alert("Session expired. Please login again.");
       }
     } catch (error) {
       console.error(error);
@@ -134,14 +165,28 @@ export default function GalleryStudio() {
                 placeholder="Enter Admin Secret"
                 value={secret}
                 onChange={(e) => setSecret(e.target.value)}
-                className="w-full bg-[var(--color-nightdark)] border border-[var(--color-textdim)]/20 p-4 text-sm text-[var(--color-text)] focus:border-[var(--color-neon)] outline-none transition-all font-mono"
+                disabled={isLoading}
+                className="w-full bg-[var(--color-nightdark)] border border-[var(--color-textdim)]/20 p-4 text-sm text-[var(--color-text)] focus:border-[var(--color-neon)] outline-none transition-all font-mono disabled:opacity-50"
               />
+              {authError && (
+                <p className="mt-2 text-[var(--color-neonpink)] text-xs font-mono">
+                  {authError}
+                </p>
+              )}
             </div>
             <button
               type="submit"
-              className="w-full py-4 bg-[var(--color-neon)] text-[var(--color-studio-dark)] font-black uppercase tracking-[0.2em] text-xs rounded-sm hover:brightness-110 transition-all font-mono"
+              disabled={isLoading || !secret}
+              className="w-full py-4 bg-[var(--color-neon)] text-[var(--color-studio-dark)] font-black uppercase tracking-[0.2em] text-xs rounded-sm hover:brightness-110 transition-all font-mono disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Unlock Dashboard
+              {isLoading ? (
+                <span className="inline-flex items-center gap-2">
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  Verifying...
+                </span>
+              ) : (
+                "Unlock Dashboard"
+              )}
             </button>
           </form>
           <div className="mt-8 text-center">
@@ -310,7 +355,6 @@ export default function GalleryStudio() {
       {/* Modals */}
       {isUploadModalOpen && (
         <UploadModal
-          adminSecret={secret}
           onClose={() => setIsUploadModalOpen(false)}
           onUploadSuccess={onUploadSuccess}
         />

@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { siteConfig } from "@/lib/config";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,19 +57,15 @@ export default function Gallery() {
   useEffect(() => {
     async function fetchItems() {
       try {
-        const res = await fetch("/api/gallery", { cache: "no-store" });
+        const res = await fetch("/api/gallery");
         if (res.ok) {
           const data = await res.json();
           const fetchedItems = data.resources || [];
-          if (fetchedItems.length > 0) {
-            setItems(fetchedItems.slice(0, 10));
-          } else {
-            setItems(siteConfig.portfolio.slice(0, 10));
-          }
+          setItems(fetchedItems.slice(0, 10));
         }
       } catch (e) {
         console.error("Gallery fetch failed:", e);
-        setItems(siteConfig.portfolio.slice(0, 10));
+        setItems([]);
       } finally {
         setIsLoading(false);
       }

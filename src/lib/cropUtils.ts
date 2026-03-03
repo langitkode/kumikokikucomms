@@ -102,7 +102,7 @@ export async function processFullImage(imageSrc: string): Promise<string> {
         reader.onloadend = () => resolve(reader.result as string);
       },
       "image/webp",
-      0.65,
+      0.55,
     );
   });
 }

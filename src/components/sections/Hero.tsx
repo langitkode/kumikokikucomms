@@ -156,7 +156,7 @@ export default function Hero() {
             {/* Floating Emote Decor */}
             <div className="absolute -top-16 -right-12 w-20 h-20 opacity-90 pointer-events-none animate-float z-20">
               <Image
-                src="/Assets/emotes/hi.png"
+                src="/Assets/emotes/hi.webp"
                 alt="Hi Emote"
                 fill
                 sizes="80px"

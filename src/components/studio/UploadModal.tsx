@@ -9,13 +9,11 @@ import { siteConfig } from "@/lib/config";
 interface UploadModalProps {
   onClose: () => void;
   onUploadSuccess: () => void;
-  adminSecret: string;
 }
 
 export default function UploadModal({
   onClose,
   onUploadSuccess,
-  adminSecret,
 }: UploadModalProps) {
   const [image, setImage] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -64,15 +62,17 @@ export default function UploadModal({
           image: finalImage,
           category,
           label,
-          adminSecret,
         }),
       });
 
       if (response.ok) {
         onUploadSuccess();
         onClose();
+      } else if (response.status === 401) {
+        alert("Session expired. Please login again.");
+        onClose();
       } else {
-        alert("Upload failed. Please check your admin secret or connections.");
+        alert("Upload failed. Please try again.");
       }
     } catch (error) {
       console.error(error);

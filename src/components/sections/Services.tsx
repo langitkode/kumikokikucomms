@@ -117,7 +117,7 @@ export default function Services() {
                 {index === 1 && (
                   <div className="absolute -top-6 -right-4 w-16 h-16 opacity-80 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none animate-float">
                     <Image
-                      src="/Assets/emotes/pistol.png"
+                      src="/Assets/emotes/pistol.webp"
                       alt="Emote"
                       fill
                       sizes="64px"
@@ -131,7 +131,7 @@ export default function Services() {
                     style={{ animationDelay: "0.8s" }}
                   >
                     <Image
-                      src="/Assets/emotes/hype!.png"
+                      src="/Assets/emotes/hype!.webp"
                       alt="Emote"
                       fill
                       sizes="80px"
@@ -145,7 +145,7 @@ export default function Services() {
                     style={{ animationDelay: "1.5s" }}
                   >
                     <Image
-                      src="/Assets/emotes/angry.png"
+                      src="/Assets/emotes/angry.webp"
                       alt="Emote"
                       fill
                       sizes="56px"

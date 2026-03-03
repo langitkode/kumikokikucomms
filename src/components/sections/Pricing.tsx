@@ -147,7 +147,7 @@ export default function Pricing() {
             style={{ animationDelay: "2s" }}
           >
             <Image
-              src="/Assets/emotes/sleeping.png"
+              src="/Assets/emotes/sleeping.webp"
               alt="Sleeping Emote"
               fill
               sizes="64px"
@@ -155,14 +155,14 @@ export default function Pricing() {
             />
           </div>
           <div
-            className="absolute bottom-1/4 -right-8 w-20 h-20 opacity-90 z-20 pointer-events-none animate-float"
+            className="absolute -top-10 -right-10 w-16 h-16 opacity-80 z-20 pointer-events-none animate-float"
             style={{ animationDelay: "0.3s" }}
           >
             <Image
-              src="/Assets/emotes/lovelove.png"
+              src="/Assets/emotes/lovelove.webp"
               alt="Lovelove Emote"
               fill
-              sizes="80px"
+              sizes="64px"
               className="object-contain"
             />
           </div>

@@ -82,7 +82,7 @@ export default function Contact() {
           {/* Floating Emote Decor */}
           <div className="absolute -top-20 -left-10 w-24 h-24 opacity-90 pointer-events-none animate-float z-20">
             <Image
-              src="/Assets/emotes/shocked.png"
+              src="/Assets/emotes/shocked.webp"
               alt="Shocked Emote"
               fill
               sizes="100px"
@@ -94,7 +94,7 @@ export default function Contact() {
             style={{ animationDelay: "0.7s" }}
           >
             <Image
-              src="/Assets/emotes/sad.png"
+              src="/Assets/emotes/sad.webp"
               alt="Sad Emote"
               fill
               sizes="80px"
@@ -137,7 +137,7 @@ export default function Contact() {
               style={{ animationDelay: "1.4s" }}
             >
               <Image
-                src="/Assets/emotes/patpat.png"
+                src="/Assets/emotes/patpat.webp"
                 alt="Patpat Emote"
                 fill
                 sizes="64px"

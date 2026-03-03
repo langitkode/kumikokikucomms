@@ -2,8 +2,18 @@ import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 import { checkRateLimit } from "@/lib/rateLimit";
 
+function isAuthenticated(request: Request): boolean {
+  const cookie = request.headers.get("cookie") || "";
+  return cookie.includes("studio_auth=authenticated");
+}
+
 export async function POST(request: Request) {
   try {
+    // Check authentication first
+    if (!isAuthenticated(request)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     // Rate Limit: 5 uploads per 60 seconds
     const ip = request.headers.get("x-forwarded-for") || "anonymous";
     const ratelimit = checkRateLimit(ip, 5, 60000);
@@ -22,12 +32,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { image, category, label, adminSecret } = await request.json();
-
-    // Basic security check
-    if (adminSecret !== process.env.ADMIN_SECRET) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const { image, category, label } = await request.json();
 
     if (!image) {
       return NextResponse.json({ error: "No image provided" }, { status: 400 });
@@ -47,6 +52,9 @@ export async function POST(request: Request) {
       },
     });
 
+    // Note: Cache revalidation is handled via time-based revalidation in /api/gallery
+    // Gallery will automatically fetch fresh data on next request
+
     return NextResponse.json({
       success: true,
       url: uploadResponse.secure_url,
@@ -60,13 +68,14 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const { public_id, adminSecret } = await request.json();
-
-    // Basic security check
-    if (adminSecret !== process.env.ADMIN_SECRET) {
+    // Check authentication first
+    if (!isAuthenticated(request)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { public_id } = await request.json();
+
+    // Basic security check removed - cookie auth is sufficient
     if (!public_id) {
       return NextResponse.json(
         { error: "No public_id provided" },
@@ -76,6 +85,9 @@ export async function DELETE(request: Request) {
 
     // Delete from Cloudinary
     await cloudinary.uploader.destroy(public_id);
+
+    // Note: Cache revalidation is handled via time-based revalidation in /api/gallery
+    // Gallery will automatically fetch fresh data on next request
 
     return NextResponse.json({ success: true });
   } catch (error) {

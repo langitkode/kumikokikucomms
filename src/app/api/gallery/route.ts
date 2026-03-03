@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 import { checkRateLimit } from "@/lib/rateLimit";
 
-export const dynamic = "force-dynamic";
+// Revalidate gallery every 5 minutes (300 seconds)
+// This ensures fresh data without manual cache invalidation
+export const revalidate = 300;
 
 export async function GET(request: Request) {
   try {
@@ -30,9 +32,10 @@ export async function GET(request: Request) {
     const category = searchParams.get("category");
     const limit = Math.min(parseInt(searchParams.get("limit") || "20"), 100);
 
-    // Search for resources with the tag 'portfolio-item'
+    // Search for resources in the portfolio folder
     const folder = process.env.CLOUDINARY_FOLDER || "portfolio";
-    let expression = `folder:"${folder}/*" AND tags:portfolio-item`;
+    // Search by folder path - include subfolders with *
+    let expression = `folder:"${folder}" OR folder:"${folder}/*"`;
 
     if (category && category !== "all") {
       expression += ` AND context.category="${category}"`;
@@ -64,6 +67,10 @@ export async function GET(request: Request) {
     return NextResponse.json({
       resources: galleryItems,
       next_cursor: next_cursor || null,
+    }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+      },
     });
   } catch (error) {
     console.error("Failed to fetch gallery:", error);

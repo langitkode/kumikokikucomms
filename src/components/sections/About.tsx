@@ -225,7 +225,7 @@ export default function About() {
                 {/* Floating Emote Decor */}
                 <div className="absolute top-10 -right-6 lg:-right-12 w-24 h-24 opacity-90 pointer-events-none animate-float z-20">
                   <Image
-                    src="/Assets/emotes/mesmerized.png"
+                    src="/Assets/emotes/mesmerized.webp"
                     alt="Mesmerized Emote"
                     fill
                     sizes="100px"

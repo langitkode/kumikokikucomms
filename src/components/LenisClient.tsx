@@ -1,38 +1,38 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import Lenis from "lenis";
 
 export default function LenisClient({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
+  const rafRef = useRef<number | undefined>(undefined);
+
   useEffect(() => {
-    const initLenis = async () => {
-      const { default: Lenis } = await import("lenis");
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
 
-      const lenis = new Lenis();
+    lenisRef.current = lenis;
 
-      // Sync Lenis with GSAP ScrollTrigger
-      lenis.on("scroll", ({ scroll }: { scroll: number }) => {
-        window.dispatchEvent(
-          new CustomEvent("scroll", { detail: { scroll } })
-        );
-      });
+    function raf(time: number) {
+      lenis.raf(time);
+      rafRef.current = requestAnimationFrame(raf);
+    }
 
-      function raf(time: number) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
+    rafRef.current = requestAnimationFrame(raf);
 
-      requestAnimationFrame(raf);
+    // Make lenis available globally for GSAP
+    (window as any).lenis = lenis;
 
-      // Make lenis available globally for GSAP
-      (window as unknown as { lenis: typeof lenis }).lenis = lenis;
-
-      // Cleanup
-      return () => {
-        lenis.destroy();
-      };
+    // Cleanup
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      lenis.destroy();
+      lenisRef.current = null;
+      delete (window as any).lenis;
     };
-
-    initLenis();
   }, []);
 
   return <>{children}</>;
