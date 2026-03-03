@@ -64,10 +64,10 @@ export async function GET(request: Request) {
         '/upload/w_640,h_360,c_fill,q_auto:good,f_auto/$1'
       );
 
-      // Lightbox: Original aspect ratio, max 800px bounds
+      // Lightbox: Original aspect ratio, max 800px width
       const lightboxUrl = resource.secure_url.replace(
         /\/upload\/(v\d+\/)?/,
-        '/upload/w_800,h_800,q_auto:good,f_auto/$1'
+        '/upload/w_800,q_auto:good,f_auto/$1'
       );
 
       return {
