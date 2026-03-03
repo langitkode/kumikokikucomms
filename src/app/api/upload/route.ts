@@ -53,8 +53,8 @@ export async function POST(request: Request) {
     });
 
     // On-demand revalidation: Clear gallery cache immediately
-    const { unstable_cacheTag } = await import('next/cache');
-    unstable_cacheTag('gallery');
+    const { cacheTag } = await import('next/cache');
+    cacheTag('gallery');
 
     return NextResponse.json({
       success: true,
@@ -88,8 +88,8 @@ export async function DELETE(request: Request) {
     await cloudinary.uploader.destroy(public_id);
 
     // On-demand revalidation: Clear gallery cache immediately
-    const { unstable_cacheTag } = await import('next/cache');
-    unstable_cacheTag('gallery');
+    const { cacheTag } = await import('next/cache');
+    cacheTag('gallery');
 
     return NextResponse.json({ success: true });
   } catch (error) {
