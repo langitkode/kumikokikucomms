@@ -72,7 +72,10 @@ export default function GalleryStudio() {
   const fetchGallery = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/gallery");
+      // Add timestamp to bypass CDN cache (admin needs fresh data)
+      const response = await fetch(`/api/gallery?_t=${Date.now()}`, {
+        cache: 'no-store',
+      });
       if (response.ok) {
         const data = await response.json();
         setItems(data.resources || []);
