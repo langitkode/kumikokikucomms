@@ -206,26 +206,6 @@ export default function Contact() {
             <div className="mb-10">
               <SocialIcons links={socialLinks} size="lg" color="#ff4d7a" />
             </div>
-
-            {/* Email CTA */}
-            <a
-              href="mailto:example@gmail.com"
-              className="inline-flex items-center gap-3 px-8 py-4 border border-[var(--color-textdim)]/30 bg-[var(--color-studio-slate)] text-[var(--color-text)] text-[10px] uppercase tracking-[0.2em] font-mono transition-all duration-300 hover:border-[var(--color-neon)] hover:text-[var(--color-neon)] rounded-sm"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="mb-0.5"
-              >
-                <rect x="2" y="4" width="20" height="16" rx="0" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
-              <span>Send Email</span>
-            </a>
           </div>
         </div>
       </div>
