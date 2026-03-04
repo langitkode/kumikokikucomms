@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import {
   Plus,
@@ -22,6 +22,8 @@ export default function GalleryStudio() {
   const [secret, setSecret] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState<any[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [isLoadMoreLoading, setIsLoadMoreLoading] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("all");
@@ -38,7 +40,7 @@ export default function GalleryStudio() {
       const response = await fetch("/api/studio/verify");
       if (response.ok) {
         setIsAuthorized(true);
-        fetchGallery();
+        // fetchGallery will be called by the effect when isAuthorized changes
       }
     } catch (error) {
       console.error("Auth check failed:", error);
@@ -58,7 +60,7 @@ export default function GalleryStudio() {
 
       if (response.ok) {
         setIsAuthorized(true);
-        fetchGallery();
+        // fetchGallery will be called by the effect when isAuthorized changes
       } else {
         const data = await response.json();
         setAuthError(data.error || "Invalid credentials");
@@ -69,23 +71,62 @@ export default function GalleryStudio() {
     }
   };
 
-  const fetchGallery = async () => {
-    setIsLoading(true);
+  const fetchGallery = useCallback(async (
+    cursor: string | null = null,
+    append = false,
+    bypassCache = false
+  ) => {
+    if (cursor) setIsLoadMoreLoading(true);
+    else setIsLoading(true);
+
     try {
-      // Add timestamp to bypass CDN cache (admin needs fresh data)
-      const response = await fetch(`/api/gallery?_t=${Date.now()}`, {
+      const baseUrl = new URL("/api/gallery", window.location.origin);
+      baseUrl.searchParams.set("limit", "25");
+      
+      if (activeTab !== "all") {
+        baseUrl.searchParams.set("category", activeTab);
+      }
+      
+      if (bypassCache) {
+        baseUrl.searchParams.set("_t", Date.now().toString());
+      }
+      
+      if (cursor) {
+        baseUrl.searchParams.set("next_cursor", cursor);
+      }
+
+      const response = await fetch(baseUrl.toString(), {
         cache: 'no-store',
       });
-      if (response.ok) {
-        const data = await response.json();
-        setItems(data.resources || []);
+
+      if (!response.ok) {
+        if (!append) setItems([]);
+        return;
       }
+
+      const data = await response.json();
+      const newItems = data.resources || [];
+
+      if (append) {
+        setItems((prev) => [...prev, ...newItems]);
+      } else {
+        setItems(newItems);
+      }
+      setNextCursor(data.next_cursor || null);
     } catch (error) {
       console.error("Failed to fetch gallery:", error);
+      if (!append) setItems([]);
     } finally {
       setIsLoading(false);
+      setIsLoadMoreLoading(false);
     }
-  };
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (isAuthorized) {
+      fetchGallery();
+    }
+  }, [fetchGallery, isAuthorized]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,7 +159,8 @@ export default function GalleryStudio() {
       });
 
       if (response.ok) {
-        setItems(items.filter((item) => item.public_id !== publicId));
+        // Refetch to maintain correct sort order with cache bypass
+        fetchGallery(null, false, true);
       } else if (response.status === 401) {
         // Session expired, redirect to login
         setIsAuthorized(false);
@@ -138,7 +180,8 @@ export default function GalleryStudio() {
       origin: { y: 0.6 },
       colors: ["#E84CFF", "#B026FF", "#7000FF"],
     });
-    fetchGallery();
+    // Refetch with cache bypass to get fresh data
+    fetchGallery(null, false, true);
   };
 
   if (isLoading && items.length === 0) {
@@ -219,7 +262,7 @@ export default function GalleryStudio() {
         </div>
         <div className="flex items-center gap-4">
           <button
-            onClick={fetchGallery}
+            onClick={() => fetchGallery(null, false, true)}
             className="p-2 text-[var(--color-textmuted)] hover:text-[var(--color-neon)] transition-colors"
           >
             <RefreshCw
@@ -262,17 +305,7 @@ export default function GalleryStudio() {
         </div>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          <button
-            onClick={() => setActiveTab("all")}
-            className={`px-6 py-3 text-[10px] font-black uppercase tracking-widest border border-hairline transition-all rounded-sm ${
-              activeTab === "all"
-                ? "bg-[var(--color-neon)] text-[var(--color-studio-dark)] border-[var(--color-neon)]"
-                : "bg-[var(--color-nightmid)] text-[var(--color-textdim)] border-[var(--color-textdim)]/10 hover:border-[var(--color-textdim)]/30 hover:text-[var(--color-text)]"
-            }`}
-          >
-            All Managed
-          </button>
+        <div className="flex flex-wrap items-center gap-2 mb-8">
           {siteConfig.galleryCategories.map((cat) => (
             <button
               key={cat.id}
@@ -289,12 +322,8 @@ export default function GalleryStudio() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6">
-          {items
-            .filter(
-              (item) => activeTab === "all" || item.category === activeTab,
-            )
-            .map((item) => (
+        <div key={activeTab} className="grid grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6">
+          {items.map((item) => (
               <div
                 key={item.public_id}
                 className="group relative aspect-video bg-[var(--color-studio-slate)] border border-hairline border-[var(--color-textdim)]/10 overflow-hidden rounded-studio transition-all hover:border-[var(--color-neon)]/30"
@@ -378,6 +407,26 @@ export default function GalleryStudio() {
             </div>
           )}
         </div>
+
+        {/* Load More Button */}
+        {nextCursor && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={() => fetchGallery(nextCursor, true)}
+              disabled={isLoadMoreLoading}
+              className="px-8 py-4 bg-transparent border border-[var(--color-textdim)]/20 text-[var(--color-text)] text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[var(--color-neon)] hover:text-[var(--color-studio-dark)] hover:border-[var(--color-neon)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoadMoreLoading ? (
+                <span className="inline-flex items-center gap-2">
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  Loading...
+                </span>
+              ) : (
+                `Load More (${activeTab === "all" ? "all" : activeTab})`
+              )}
+            </button>
+          </div>
+        )}
       </main>
 
       {/* Modals */}

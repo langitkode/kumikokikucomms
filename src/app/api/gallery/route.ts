@@ -28,16 +28,22 @@ export async function GET(request: Request) {
     const cursor = searchParams.get("next_cursor");
     const category = searchParams.get("category");
     const limit = Math.min(parseInt(searchParams.get("limit") || "20"), 100);
+    
+    // Sorting parameters
+    const sortBy = searchParams.get("sort") || "created_at"; // created_at, public_id
+    const direction = searchParams.get("order") || "desc"; // asc, desc
 
     // Use Admin API instead of Search API (much cheaper)
     const folder = process.env.CLOUDINARY_FOLDER || "portfolio";
-    
+
     const resourcesResponse = await cloudinary.api.resources({
       type: "upload",
       prefix: `${folder}/`,
       max_results: limit,
       next_cursor: cursor || undefined,
       context: true, // Explicitly request context data
+      sort_by: sortBy,
+      direction: direction === "asc" ? "asc" : "desc",
     });
 
     let resources = resourcesResponse.resources || [];

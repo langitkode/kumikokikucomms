@@ -37,8 +37,10 @@ function GalleryContent() {
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [animateFromIndex, setAnimateFromIndex] = useState<number>(0);
   const gridRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const itemCountRef = useRef<number>(0);
 
   const fetchItems = useCallback(
     async (category: string, cursor: string | null = null) => {
@@ -52,21 +54,32 @@ function GalleryContent() {
         if (cursor) url.searchParams.set("next_cursor", cursor);
 
         const res = await fetch(url.toString());
-        
-        if (res.ok) {
-          const data = await res.json();
-          const newItems = data.resources || [];
 
-          if (cursor) {
-            setPortfolioItems((prev) => [...prev, ...newItems]);
-          } else {
-            setPortfolioItems(newItems);
-          }
-          setNextCursor(data.next_cursor);
+        if (!res.ok) {
+          throw new Error("Failed to fetch gallery");
         }
+
+        const data = await res.json();
+        const newItems = data.resources || [];
+
+        if (cursor) {
+          // Append mode: add new items to existing list
+          const currentCount = itemCountRef.current;
+          setPortfolioItems((prev) => [...prev, ...newItems]);
+          setAnimateFromIndex(currentCount); // Only animate from this index onwards
+          itemCountRef.current = currentCount + newItems.length;
+        } else {
+          // Fresh fetch: replace all items
+          setPortfolioItems(newItems);
+          setAnimateFromIndex(0); // Animate all from start
+          itemCountRef.current = newItems.length;
+        }
+        setNextCursor(data.next_cursor || null);
       } catch (e) {
         console.error("Gallery fetch failed:", e);
-        setPortfolioItems([]);
+        if (!cursor) {
+          setPortfolioItems([]);
+        }
       } finally {
         setIsLoading(false);
         setIsMoreLoading(false);
@@ -76,15 +89,27 @@ function GalleryContent() {
   );
 
   useEffect(() => {
+    // Reset item count ref when category changes
+    itemCountRef.current = 0;
+    setAnimateFromIndex(0);
+  }, [selectedCategory]);
+
+  useEffect(() => {
     fetchItems(selectedCategory, null);
   }, [selectedCategory, fetchItems]);
 
   useEffect(() => {
     const items = itemRefs.current.filter(Boolean) as HTMLElement[];
-    if (items.length > 0) {
-      animateGalleryReveal(items);
+    if (items.length > 0 && animateFromIndex < items.length) {
+      // Only animate items from animateFromIndex onwards
+      const itemsToAnimate = items.slice(animateFromIndex);
+      if (itemsToAnimate.length > 0) {
+        animateGalleryReveal(itemsToAnimate);
+      }
+      // Reset to prevent re-animation on subsequent renders
+      setAnimateFromIndex(items.length);
     }
-  }, [portfolioItems]);
+  }, [portfolioItems, animateFromIndex]);
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prev) => new Set(prev).add(index));
