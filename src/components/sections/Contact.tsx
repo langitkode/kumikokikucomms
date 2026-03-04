@@ -186,7 +186,7 @@ export default function Contact() {
             {/* VGen Primary CTA */}
             <div className="mb-10">
               <a
-                href="https://vgen.co/KomikoKiku"
+                href="https://vgen.co/KumikoKiku"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-studio-dark)] text-[11px] uppercase tracking-[0.2em] font-black font-mono transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,136,0,0.4)] hover:-translate-y-1 rounded-sm"
