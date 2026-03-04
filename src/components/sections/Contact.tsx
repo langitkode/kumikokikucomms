@@ -75,6 +75,19 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
+  // Fallback: Ensure text is visible if GSAP fails
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (headingRef.current) {
+        headingRef.current.style.opacity = '1';
+      }
+      if (contentRef.current) {
+        contentRef.current.style.opacity = '1';
+      }
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <section
       id="request"

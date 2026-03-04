@@ -54,27 +54,29 @@ export default function ServiceModal({
     if (isOpen) {
       document.body.style.overflow = "hidden";
 
+      // Simplified animations for mobile performance
+      const isMobile = window.innerWidth < 768;
       const tl = gsap.timeline();
 
       tl.to(overlayRef.current, {
         opacity: 1,
-        duration: 0.4,
+        duration: isMobile ? 0.2 : 0.4,
         ease: "power2.out",
       });
 
       tl.fromTo(
         modalRef.current,
         { x: "100%" },
-        { x: "0%", duration: 0.6, ease: "expo.out" },
-        "-=0.3",
+        { x: "0%", duration: isMobile ? 0.3 : 0.6, ease: isMobile ? "power2.out" : "expo.out" },
+        "-=0.2",
       );
 
       if (contentRef.current?.children) {
         tl.fromTo(
           Array.from(contentRef.current.children),
           { x: 20, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" },
-          "-=0.4",
+          { x: 0, opacity: 1, duration: isMobile ? 0.2 : 0.4, stagger: isMobile ? 0.02 : 0.05, ease: "power2.out" },
+          `-=${isMobile ? 0.15 : 0.4}`,
         );
       }
     } else {
