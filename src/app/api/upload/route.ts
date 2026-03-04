@@ -52,9 +52,9 @@ export async function POST(request: Request) {
       },
     });
 
-    // On-demand revalidation: Clear gallery cache immediately
-    const { cacheTag } = await import('next/cache');
-    cacheTag('gallery');
+    // Note: cacheTag requires "use cache" directive (Server Actions only)
+    // For Route Handlers, rely on Cache-Control headers for caching
+    // Gallery cache expires after 1 hour automatically
 
     return NextResponse.json({
       success: true,
@@ -87,9 +87,9 @@ export async function DELETE(request: Request) {
     // Delete from Cloudinary
     await cloudinary.uploader.destroy(public_id);
 
-    // On-demand revalidation: Clear gallery cache immediately
-    const { cacheTag } = await import('next/cache');
-    cacheTag('gallery');
+    // Note: cacheTag requires "use cache" directive (Server Actions only)
+    // For Route Handlers, rely on Cache-Control headers for caching
+    // Gallery cache expires after 1 hour automatically
 
     return NextResponse.json({ success: true });
   } catch (error) {
