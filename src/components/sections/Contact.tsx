@@ -178,23 +178,43 @@ export default function Contact() {
             </div>
 
             <p className="text-[var(--color-textmuted)] text-sm leading-relaxed mb-10 max-w-md mx-auto">
-              For commission inquiries, reach out through any platform below. I
-              typically respond within 24-48 hours ♡
+              For commission inquiries, I primarily accept requests through{" "}
+              <strong className="text-[var(--color-neon)] font-bold">VGen</strong>. 
+              Reach out through any platform below. I typically respond within 24-48 hours ♡
             </p>
 
+            {/* VGen Primary CTA */}
+            <div className="mb-10">
+              <a
+                href="https://vgen.co/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-[var(--color-neon)] to-[var(--color-neonpink)] text-[var(--color-studio-dark)] text-[11px] uppercase tracking-[0.2em] font-black font-mono transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,136,0,0.4)] hover:-translate-y-1 rounded-sm"
+              >
+                <Image
+                  src="/Assets/vgen-logo.webp"
+                  alt="VGen"
+                  width={48}
+                  height={24}
+                  className="object-contain"
+                />
+                <span>Open Commission</span>
+              </a>
+            </div>
+
             {/* Social Links */}
-            <div className="mb-12">
+            <div className="mb-10">
               <SocialIcons links={socialLinks} size="lg" color="#ff4d7a" />
             </div>
 
             {/* Email CTA */}
             <a
               href="mailto:example@gmail.com"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-[var(--color-neonpink)] to-[var(--color-neon)] text-[var(--color-studio-dark)] text-[11px] uppercase tracking-[0.2em] font-black font-mono transition-all duration-300 hover:shadow-[0_0_40px_rgba(255,77,122,0.4)] hover:-translate-y-1 rounded-sm"
+              className="inline-flex items-center gap-3 px-8 py-4 border border-[var(--color-textdim)]/30 bg-[var(--color-studio-slate)] text-[var(--color-text)] text-[10px] uppercase tracking-[0.2em] font-mono transition-all duration-300 hover:border-[var(--color-neon)] hover:text-[var(--color-neon)] rounded-sm"
             >
               <svg
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
