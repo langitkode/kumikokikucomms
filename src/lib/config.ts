@@ -26,10 +26,18 @@ export const siteConfig: SiteConfig = {
   },
 
   socialLinks: [
-    { platform: "Instagram", url: "https://instagram.com/", icon: "instagram" },
-    { platform: "X", url: "https://x.com/", icon: "x" },
-    { platform: "Discord", url: "https://discord.gg/", icon: "discord" },
-    { platform: "Vgen", url: "https://vgen.co/", icon: "vgen" },
+    {
+      platform: "Instagram",
+      url: "https://instagram.com/kumikokikuwu",
+      icon: "instagram",
+    },
+    { platform: "X", url: "https://x.com/kumikokikuwu", icon: "x" },
+    {
+      platform: "Discord",
+      url: "https://discord.com/useres1303914733576917085",
+      icon: "discord",
+    },
+    { platform: "Vgen", url: "https://vgen.co/KomikoKiku", icon: "vgen" },
   ],
 
   servicesHeading: {
