@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { SocialLink } from "@/lib/types";
 
 interface SocialIconsProps {
@@ -10,20 +11,6 @@ interface SocialIconsProps {
 
 function SocialIcon({ icon, size }: { icon: string; size: number }) {
   switch (icon) {
-    case "email":
-      return (
-        <svg
-          width={size}
-          height={size}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <rect x="2" y="4" width="20" height="16" rx="0" />
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-        </svg>
-      );
     case "x":
       return (
         <svg
@@ -33,20 +20,6 @@ function SocialIcon({ icon, size }: { icon: string; size: number }) {
           fill="currentColor"
         >
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      );
-    case "youtube":
-      return (
-        <svg
-          width={size}
-          height={size}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <rect x="2" y="6" width="20" height="12" rx="0" />
-          <path d="m10 15 5-3-5-3z" fill="currentColor" />
         </svg>
       );
     case "instagram":
@@ -77,14 +50,14 @@ function SocialIcon({ icon, size }: { icon: string; size: number }) {
       );
     case "vgen":
       return (
-        <svg
-          width={size}
+        <Image
+          src="/Assets/vgen-logo.webp"
+          alt="VGen"
+          width={size * 2}
           height={size}
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <path d="M5.5 2a.5.5 0 00-.5.5v19a.5.5 0 00.5.5h13a.5.5 0 00.5-.5v-19a.5.5 0 00-.5-.5h-13zm6.875 3.5c.368 0 .695.068.982.205.286.136.51.33.67.58.162.25.243.54.243.87 0 .365-.09.675-.27.932-.18.256-.42.455-.72.595l1.03 1.818h-1.24l-.885-1.64h-.635v1.64h-1.13V5.5h1.955zm-.145.915v1.09h.735c.23 0 .415-.052.555-.155.14-.104.21-.245.21-.425 0-.17-.067-.3-.2-.395-.133-.095-.31-.143-.53-.143h-.77zM12 12.5h1.13v5H12v-5zm-3.5 0h1.13v5H8.5v-5z" />
-        </svg>
+          className="object-contain"
+          style={{ width: size * 2, height: size }}
+        />
       );
     default:
       return null;
