@@ -13,9 +13,6 @@ import { animateGalleryReveal } from "@/lib/animations";
 import { useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
-// Gallery page is dynamic due to category filtering and pagination
-export const dynamic = 'force-dynamic';
-
 interface GalleryImage {
   src: string;
   lightboxSrc: string;

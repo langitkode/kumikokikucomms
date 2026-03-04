@@ -3,8 +3,6 @@ import cloudinary from "@/lib/cloudinary";
 import { checkRateLimit } from "@/lib/rateLimit";
 
 // ISR: Cache for 1 hour, revalidated on-demand when images are uploaded/deleted
-export const dynamic = 'force-dynamic';
-
 export async function GET(request: Request) {
   try {
     // Rate Limit: 15 requests per 60 seconds
