@@ -26,12 +26,10 @@ export const siteConfig: SiteConfig = {
   },
 
   socialLinks: [
-    { platform: "Email", url: "mailto:example@gmail.com", icon: "email" },
-    { platform: "X", url: "https://x.com/", icon: "x" },
-    { platform: "YouTube", url: "https://youtube.com/", icon: "youtube" },
     { platform: "Instagram", url: "https://instagram.com/", icon: "instagram" },
+    { platform: "X", url: "https://x.com/", icon: "x" },
     { platform: "Discord", url: "https://discord.gg/", icon: "discord" },
-    { platform: "Ko-fi", url: "https://ko-fi.com/", icon: "kofi" },
+    { platform: "Vgen", url: "https://vgen.co/", icon: "vgen" },
   ],
 
   servicesHeading: {
