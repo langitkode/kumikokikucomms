@@ -19,7 +19,7 @@ export default function Services() {
   const [selectedService, setSelectedService] = useState<
     (typeof services)[0] | null
   >(null);
-  const [selectedAccent, setSelectedAccent] = useState<string>("#e84cff");
+  const [selectedAccent, setSelectedAccent] = useState<string>("#ff8800");
 
   // Toggle float animations when in viewport
   useEffect(() => {
@@ -41,9 +41,9 @@ export default function Services() {
   }, []);
 
   const accentColors = [
-    { hex: "#e84cff", text: "text-[var(--color-neon)]" },
+    { hex: "#ff8800", text: "text-[var(--color-neon)]" },
+    { hex: "#ff6b00", text: "text-[var(--color-neonpink)]" },
     { hex: "#3dccff", text: "text-[var(--color-neonblue)]" },
-    { hex: "#ff2d78", text: "text-[var(--color-neonpink)]" },
     { hex: "#fbbf24", text: "text-[var(--color-neonyellow)]" },
     { hex: "#a855f7", text: "text-[var(--color-neonpurple)]" },
     { hex: "#ff3355", text: "text-[var(--color-neonred)]" },

@@ -13,10 +13,10 @@
   --color-nightglass: rgba(8, 9, 26, 0.88);
 
   /* Neon — Electric, vivid, high contrast */
-  --color-neon: #e84cff; /* Electric magenta — primary */
-  --color-neonpink: #ff2d78; /* Hot pink — accent */
+  --color-neon: #ff8800; /* Vibrant orange — primary */
+  --color-neonpink: #ff6b00; /* Orange-red — accent */
   --color-neonblue: #3dccff; /* Electric cyan-blue */
-  --color-neonpurple: #a855f7; /* Vivid purple */
+  --color-neonpurple: #a855f7; /* Vivid purple (secondary) */
   --color-neonyellow: #fbbf24; /* Warm gold */
   --color-neonred: #ff3355; /* Crisp red */
   --color-neoncyan: #22d3ee; /* Bright cyan */
@@ -84,7 +84,7 @@ h6 {
     background: linear-gradient(
       135deg,
       var(--color-neon),
-      var(--color-neonpink)
+      var(--color-neonpurple)
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -94,7 +94,7 @@ h6 {
   .text-gradient-cool {
     background: linear-gradient(
       135deg,
-      var(--color-neonblue),
+      var(--color-neonpink),
       var(--color-neon)
     );
     -webkit-background-clip: text;
@@ -104,15 +104,15 @@ h6 {
 
   .text-glow-neon {
     text-shadow:
-      0 0 20px rgba(232, 76, 255, 0.6),
-      0 0 60px rgba(232, 76, 255, 0.3),
-      0 0 100px rgba(232, 76, 255, 0.1);
+      0 0 20px rgba(255, 136, 0, 0.6),
+      0 0 60px rgba(255, 136, 0, 0.3),
+      0 0 100px rgba(255, 136, 0, 0.1);
   }
 
   .text-glow-pink {
     text-shadow:
-      0 0 20px rgba(255, 45, 120, 0.6),
-      0 0 60px rgba(255, 45, 120, 0.3);
+      0 0 20px rgba(255, 107, 0, 0.6),
+      0 0 60px rgba(255, 107, 0, 0.3);
   }
 
   .text-glow-blue {
@@ -147,8 +147,8 @@ h6 {
   .hanko-stamp {
     width: 48px;
     height: 48px;
-    border: 2px solid var(--color-neonpink);
-    color: var(--color-neonpink);
+    border: 2px solid var(--color-neon);
+    color: var(--color-neon);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,7 +160,7 @@ h6 {
     transform: rotate(-10deg);
     user-select: none;
     pointer-events: none;
-    box-shadow: 0 0 10px rgba(255, 45, 120, 0.2);
+    box-shadow: 0 0 10px rgba(255, 136, 0, 0.2);
   }
 
   /* Refined Border utilities */
@@ -200,14 +200,14 @@ h6 {
   /* === Neon Border Glow === */
   .neon-border-glow {
     box-shadow:
-      0 0 8px rgba(232, 76, 255, 0.3),
-      inset 0 0 8px rgba(232, 76, 255, 0.1);
+      0 0 8px rgba(255, 136, 0, 0.3),
+      inset 0 0 8px rgba(255, 136, 0, 0.1);
   }
 
   .neon-border-pink {
     box-shadow:
-      0 0 8px rgba(255, 45, 120, 0.3),
-      inset 0 0 8px rgba(255, 45, 120, 0.1);
+      0 0 8px rgba(255, 107, 0, 0.3),
+      inset 0 0 8px rgba(255, 107, 0, 0.1);
   }
 
   /* === Tape / Washi Tape Decoration === */
@@ -218,7 +218,7 @@ h6 {
     left: -6px;
     width: 40px;
     height: 12px;
-    background: rgba(232, 76, 255, 0.2);
+    background: rgba(255, 136, 0, 0.2);
     transform: rotate(-45deg);
     border-radius: 1px;
     z-index: 3;
@@ -230,7 +230,7 @@ h6 {
     right: -6px;
     width: 40px;
     height: 12px;
-    background: rgba(255, 45, 120, 0.2);
+    background: rgba(255, 107, 0, 0.2);
     transform: rotate(-45deg);
     border-radius: 1px;
     z-index: 3;
@@ -262,21 +262,21 @@ h6 {
   /* === Japanese Grid Patterns === */
   .bg-grid-japanese {
     background-image:
-      linear-gradient(rgba(232, 76, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232, 76, 255, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(255, 136, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 136, 0, 0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
   .bg-grid-fine {
     background-image:
-      linear-gradient(rgba(232, 76, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232, 76, 255, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(255, 136, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 136, 0, 0.03) 1px, transparent 1px);
     background-size: 30px 30px;
   }
 
   .bg-dot-japanese {
     background-image: radial-gradient(
-      rgba(232, 76, 255, 0.2) 1px,
+      rgba(255, 136, 0, 0.2) 1px,
       transparent 1px
     );
     background-size: 20px 20px;
@@ -287,12 +287,12 @@ h6 {
     background:
       radial-gradient(
         ellipse at 15% 25%,
-        rgba(232, 76, 255, 0.06) 0%,
+        rgba(255, 136, 0, 0.06) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse at 85% 75%,
-        rgba(255, 45, 120, 0.05) 0%,
+        rgba(255, 107, 0, 0.05) 0%,
         transparent 50%
       ),
       radial-gradient(
@@ -379,15 +379,15 @@ h6 {
   0%,
   100% {
     text-shadow:
-      0 0 10px rgba(232, 76, 255, 0.5),
-      0 0 40px rgba(232, 76, 255, 0.3),
-      0 0 80px rgba(232, 76, 255, 0.1);
+      0 0 10px rgba(255, 136, 0, 0.5),
+      0 0 40px rgba(255, 136, 0, 0.3),
+      0 0 80px rgba(255, 136, 0, 0.1);
   }
   50% {
     text-shadow:
-      0 0 20px rgba(232, 76, 255, 0.8),
-      0 0 60px rgba(232, 76, 255, 0.5),
-      0 0 120px rgba(232, 76, 255, 0.2);
+      0 0 20px rgba(255, 136, 0, 0.8),
+      0 0 60px rgba(255, 136, 0, 0.5),
+      0 0 120px rgba(255, 136, 0, 0.2);
   }
 }
 
