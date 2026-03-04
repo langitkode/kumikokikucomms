@@ -34,7 +34,7 @@ export const siteConfig: SiteConfig = {
     { platform: "X", url: "https://x.com/kumikokikuwu", icon: "x" },
     {
       platform: "Discord",
-      url: "https://discord.com/useres1303914733576917085",
+      url: "https://discord.com/users/1303914733576917085",
       icon: "discord",
     },
     { platform: "Vgen", url: "https://vgen.co/KumikoKiku", icon: "vgen" },

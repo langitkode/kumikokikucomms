@@ -19,6 +19,15 @@ export const metadata: Metadata = {
     "Kumiko Kiku",
     "kumikokikucomms",
   ],
+  icons: {
+    icon: [
+      { url: "/Assets/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/Assets/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/Assets/apple-touch-icon.png",
+    shortcut: "/Assets/favicon.ico",
+  },
+  manifest: "/Assets/site.webmanifest",
   openGraph: {
     title: "Kumiko Kiku Commission - VTuber Artist & Illustrator",
     description:
