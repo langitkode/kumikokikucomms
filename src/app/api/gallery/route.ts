@@ -55,16 +55,16 @@ export async function GET(request: Request) {
     const galleryItems = resources.map((resource: any) => {
       const ctx = resource.context?.custom || resource.context || {};
 
-      // Grid thumbnail: 16:9 crop for consistent layout
+      // Grid thumbnail: 16:9 crop for consistent layout (cached 1 hour)
       const gridUrl = resource.secure_url.replace(
         /\/upload\/(v\d+\/)?/,
         '/upload/w_640,h_360,c_fill,q_auto:good,f_auto/$1'
       );
 
-      // Lightbox: Original aspect ratio, max 800px width
+      // Lightbox: Original aspect ratio, max 800px width (cached 1 year on CDN)
       const lightboxUrl = resource.secure_url.replace(
         /\/upload\/(v\d+\/)?/,
-        '/upload/w_800,q_auto:good,f_auto/$1'
+        '/upload/w_800,q_auto:good,f_auto,fl_cache/$1'
       );
 
       return {
@@ -84,7 +84,10 @@ export async function GET(request: Request) {
       next_cursor: resourcesResponse.next_cursor || null,
     }, {
       headers: {
+        // Cache API response: 1 hour with 2 hour stale backup
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
+        // Browser cache for images: 1 year (Cloudinary URLs are immutable)
+        "x-image-cache": "max-age=31536000, public",
       },
     });
   } catch (error) {

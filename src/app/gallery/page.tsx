@@ -111,6 +111,25 @@ function GalleryContent() {
     setSelectedImage(newIndex);
   };
 
+  // Preload adjacent images for smoother navigation
+  useEffect(() => {
+    if (selectedImage === null || portfolioItems.length === 0) return;
+
+    const preloadImage = (index: number) => {
+      if (typeof window !== 'undefined') {
+        const img = new window.Image();
+        img.src = portfolioItems[index].lightboxSrc;
+      }
+    };
+
+    // Preload next and previous images
+    const nextIndex = (selectedImage + 1) % portfolioItems.length;
+    const prevIndex = selectedImage > 0 ? selectedImage - 1 : portfolioItems.length - 1;
+    
+    preloadImage(nextIndex);
+    preloadImage(prevIndex);
+  }, [selectedImage, portfolioItems]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedImage === null) return;
