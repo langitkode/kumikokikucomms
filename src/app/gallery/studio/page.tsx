@@ -307,8 +307,8 @@ export default function GalleryStudio() {
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-studio-dark)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                {/* Overlay - desktop hover only */}
+                <div className="hidden md:flex absolute inset-0 bg-gradient-to-t from-[var(--color-studio-dark)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex-col justify-end">
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-1 line-clamp-1">
                     {item.label}
                   </p>
@@ -333,6 +333,31 @@ export default function GalleryStudio() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 bg-[var(--color-neon)]/10 text-[var(--color-neon)] hover:bg-[var(--color-neon)] hover:text-[var(--color-studio-dark)] transition-all flex-1 flex items-center justify-center"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Mobile Actions - always visible */}
+                <div className="md:hidden absolute inset-0 bg-gradient-to-t from-[var(--color-studio-dark)] via-transparent to-transparent p-3 flex flex-col justify-end">
+                  <div className="flex items-center gap-2 mb-2">
+                    <button
+                      onClick={() => handleDelete(item.public_id)}
+                      disabled={isDeleting === item.public_id}
+                      className="p-2 bg-[var(--color-neonpink)]/10 text-[var(--color-neonpink)] hover:bg-[var(--color-neonpink)] hover:text-[var(--color-studio-dark)] transition-all flex-1 flex items-center justify-center rounded-sm"
+                    >
+                      {isDeleting === item.public_id ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Trash2 className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                    <a
+                      href={item.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-[var(--color-neon)]/10 text-[var(--color-neon)] hover:bg-[var(--color-neon)] hover:text-[var(--color-studio-dark)] transition-all flex-1 flex items-center justify-center rounded-sm"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
